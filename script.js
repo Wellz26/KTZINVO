@@ -111,6 +111,12 @@ function printInvoice() {
   window.print();
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('addItemBtn').addEventListener('click', addItem);
+  document.getElementById('pdfBtn').addEventListener('click', exportPDF);
+  document.getElementById('printBtn').addEventListener('click', printInvoice);
+});
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('service-worker.js')
