@@ -106,10 +106,6 @@ function exportPDF() {
       invoice.style.display = 'none';
     });
 }
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    })
-    .save();
-}
 
 function printInvoice() {
   window.print();
