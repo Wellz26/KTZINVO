@@ -1,0 +1,22 @@
+{
+  "name": "Cathy’s Quotes/Invoice",
+  "short_name": "CathyInvoice",
+  "description": "Create professional invoices and quotes on the go.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fdfcf8",
+  "theme_color": "#eae6f8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

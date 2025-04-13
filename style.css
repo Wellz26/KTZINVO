@@ -1,0 +1,200 @@
+/* Global Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fdfcf8;
+  color: #2e1544;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  background-color: #eae6f8;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  margin-right: 1rem;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: #4b2c76;
+}
+
+/* Input Sections */
+.client-info,
+.item-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: #f3f0fa;
+  justify-content: space-between;
+}
+
+.client-info input,
+.item-entry input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.item-entry button {
+  background-color: #7d52c1;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.item-entry button:hover {
+  background-color: #5e3ea1;
+}
+
+/* Table Styles */
+.invoice-table {
+  padding: 2rem;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+td:last-child {
+  text-align: center;
+}
+
+button.action-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.action-btn:hover {
+  background-color: #c9302c;
+}
+
+/* Totals */
+.totals {
+  padding: 2rem;
+  background-color: #fafafa;
+  font-size: 1.2rem;
+}
+
+/* Action Buttons */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.actions button {
+  background-color: #4b2c76;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.actions button:hover {
+  background-color: #3a215d;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+}
+/* Printable Invoice Area */
+#invoicePrintArea {
+  font-family: 'Poppins', sans-serif;
+  background: white;
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+  color: #000;
+}
+
+.invoice-wrapper {
+  border: 1px solid #ccc;
+  padding: 2rem;
+}
+
+.invoice-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #4b2c76;
+}
+
+.invoice-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #7d52c1;
+}
+
+.invoice-header p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+}
+
+.invoice-meta {
+  margin: 1.5rem 0;
+  font-size: 1rem;
+}
+
+.invoice-meta p {
+  margin: 4px 0;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.invoice-table th, .invoice-table td {
+  border: 1px solid #000;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.invoice-totals {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+}
+
+.invoice-footer {
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+.invoice-footer p {
+  margin: 0.5rem 0;
+}
