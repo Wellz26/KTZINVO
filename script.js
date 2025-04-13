@@ -83,27 +83,34 @@ function exportPDF() {
   const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
   const quoteNumber = `QT-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
-
   const printArea = document.getElementById('invoicePrintArea');
+
   let html = `
-    <div style="font-family: 'Poppins', sans-serif; padding: 2rem; max-width: 800px; margin: auto;">
-      <div style="background: #eae6f8; padding: 15px 20px; border-bottom: 2px solid #4b2c76;">
-        <h2 style="margin: 0; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
-        <h3 style="margin: 0; color: #7d52c1;">HOME & GARDEN</h3>
-        <p><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
-        <p><strong>Email:</strong> cathy.linah@icloud.com | <strong>Phone:</strong> +263 772 600 749</p>
+    <div style="font-family: 'Poppins', sans-serif; padding: 40px; max-width: 800px; margin: auto; color: #000;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; background: #eae6f8; padding: 20px 25px; border-radius: 6px;">
+        <div style="max-width: 65%;">
+          <h2 style="margin: 0; font-size: 22px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
+          <h3 style="margin: 5px 0 10px; font-size: 16px; color: #7d52c1;">HOME & GARDEN</h3>
+          <p style="margin: 0; font-size: 13px;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield),<br>96 Cecil Ave (Hillside),<br>Sawanga Mall (Victoria Falls)</p>
+        </div>
+        <div style="text-align: right; font-size: 13px;">
+          <p style="margin: 0;"><strong>Email:</strong> cathy.linah@icloud.com</p>
+          <p style="margin: 5px 0;"><strong>Phone:</strong> +263 772 600 749</p>
+        </div>
       </div>
 
-      <p style="margin-top: 20px;"><strong>Quotation #:</strong> ${quoteNumber}</p>
-      <p><strong>Date:</strong> ${date}</p>
-      <p><strong>Received from:</strong> ${clientName}</p>
+      <div style="margin-top: 30px; font-size: 14px;">
+        <p><strong>Quotation #:</strong> ${quoteNumber}</p>
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Received from:</strong> ${clientName}</p>
+      </div>
 
-      <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;" border="1" cellpadding="10">
+      <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px;" border="1" cellpadding="10">
         <thead style="background: #f3f0fa;">
           <tr>
-            <th style="text-align: left;">Qty</th>
+            <th style="text-align: left; width: 15%;">Qty</th>
             <th style="text-align: left;">Description</th>
-            <th style="text-align: right;">Amount</th>
+            <th style="text-align: right; width: 25%;">Amount</th>
           </tr>
         </thead>
         <tbody>`;
@@ -129,11 +136,15 @@ function exportPDF() {
   html += `</tbody>
       </table>
 
-      <p style="margin-top: 25px; font-size: 16px;"><strong>Subtotal:</strong> ${finalTotal}</p>
-      <p style="font-size: 16px;"><strong>Total:</strong> ${finalTotal}</p>
+      <div style="margin-top: 25px; font-size: 14px;">
+        <p><strong>Subtotal:</strong> ${finalTotal}</p>
+        <p><strong>Total:</strong> ${finalTotal}</p>
+      </div>
 
-      <p style="margin-top: 40px;">This quotation is valid for: ____________________</p>
-      <p>Signature: _________________________</p>
+      <div style="margin-top: 50px; font-size: 13px;">
+        <p>This quotation is valid for: ____________________</p>
+        <p>Signature: _________________________</p>
+      </div>
     </div>`;
 
   printArea.innerHTML = html;
