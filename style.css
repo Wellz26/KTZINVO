@@ -132,6 +132,7 @@ footer {
   font-size: 0.9rem;
   color: #777;
 }
+
 /* Printable Invoice Area */
 #invoicePrintArea {
   font-family: 'Poppins', sans-serif;
@@ -173,20 +174,27 @@ footer {
   margin: 4px 0;
 }
 
-.invoice-table {
+#invoicePrintArea .invoice-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
 }
 
-.invoice-table th, .invoice-table td {
+#invoicePrintArea .invoice-table th,
+#invoicePrintArea .invoice-table td {
   border: 1px solid #000;
   padding: 0.75rem;
   text-align: left;
 }
 
+#invoicePrintArea td:last-child {
+  text-align: right;
+}
+
 .invoice-totals {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
   font-size: 1rem;
 }
 
@@ -197,4 +205,17 @@ footer {
 
 .invoice-footer p {
   margin: 0.5rem 0;
+}
+
+/* Responsive Actions */
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions button {
+    width: 100%;
+    max-width: 300px;
+  }
 }
