@@ -11,58 +11,61 @@
   <title>Cathy’s Quotes/Invoice</title>
 </head>
 <body>
-  <header>
+  <header class="app-header">
     <img src="icon.png" alt="Cathy’s Logo" class="logo" />
     <h1>Cathy’s Quotes/Invoice</h1>
   </header>
 
-  <section class="client-info">
-    <input type="text" id="clientName" placeholder="Client Name" />
-    <input type="date" id="invoiceDate" />
-  </section>
+  <main>
+    <section class="client-info">
+      <input type="text" id="clientName" placeholder="Client Name" aria-label="Client Name" />
+      <input type="date" id="invoiceDate" aria-label="Invoice Date" />
+    </section>
 
-  <section class="item-entry">
-    <input type="text" id="itemName" placeholder="Item Name" />
-    <input type="number" id="itemQty" placeholder="Quantity" min="1" />
-    <input type="number" id="itemPrice" placeholder="Price (USD)" min="0" step="0.01" />
-    <button id="addItemBtn">Add Item</button>
-  </section>
+    <section class="item-entry">
+      <input type="text" id="itemName" placeholder="Item Name" aria-label="Item Name" />
+      <input type="number" id="itemQty" placeholder="Quantity" min="1" aria-label="Quantity" />
+      <input type="number" id="itemPrice" placeholder="Price (USD)" min="0" step="0.01" aria-label="Price" />
+      <button id="addItemBtn" aria-label="Add Item">Add Item</button>
+    </section>
 
-  <section class="invoice-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Qty</th>
-          <th>Price</th>
-          <th>Total</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="itemList"></tbody>
-    </table>
-  </section>
+    <section class="invoice-table">
+      <table aria-label="Invoice Item Table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="itemList"></tbody>
+      </table>
+    </section>
 
-  <section class="totals">
-    <p>Subtotal: <span id="subtotal">$0.00</span></p>
-    <p><strong>Total: <span id="total">$0.00</span></strong></p>
-    <button id="convertZWLBtn">Convert to ZWL</button>
-  </section>
+    <section class="totals">
+      <p>Subtotal: <span id="subtotal">$0.00</span></p>
+      <p><strong>Total: <span id="total">$0.00</span></strong></p>
+      <button id="convertZWLBtn">Convert to ZWL</button>
+    </section>
 
-  <section class="actions">
-    <button id="printBtn">Print</button>
-    <button id="pdfBtn">Export to PDF</button>
-  </section>
+    <section class="actions">
+      <button id="printBtn">Print</button>
+      <button id="pdfBtn">Export to PDF</button>
+    </section>
+  </main>
 
   <footer>
-    <p>&copy; 2025 Cathy’s Quotes/Invoice</p>
+    <p>&copy; 2025 Cathy’s Quotes/Invoice. Built for Kontrol Techniks Zimbabwe.</p>
   </footer>
 
-  <!-- 👇 This will be filled dynamically by JS on export -->
-  <div id="invoicePrintArea" style="display:none;"></div>
+  <!-- Hidden printable template -->
+  <div id="invoicePrintArea" style="display: none;"></div>
 
-  <!-- Scripts -->
+  <!-- JS Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
+
