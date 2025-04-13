@@ -86,22 +86,24 @@ function exportPDF() {
 
   const printArea = document.getElementById('invoicePrintArea');
   let html = `
-    <div style="font-family: Poppins, sans-serif; padding: 20px;">
-      <div style="background: #eae6f8; padding: 15px;">
+    <div style="font-family: 'Poppins', sans-serif; padding: 2rem; max-width: 800px; margin: auto;">
+      <div style="background: #eae6f8; padding: 15px 20px; border-bottom: 2px solid #4b2c76;">
         <h2 style="margin: 0; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
-        <p>HOME & GARDEN</p>
-        <p><strong>Locations:</strong> Zonkizizwe Mall, Cecil Ave, Sawanga Mall</p>
+        <h3 style="margin: 0; color: #7d52c1;">HOME & GARDEN</h3>
+        <p><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
         <p><strong>Email:</strong> cathy.linah@icloud.com | <strong>Phone:</strong> +263 772 600 749</p>
       </div>
-      <p><strong>Quotation #:</strong> ${quoteNumber}</p>
+
+      <p style="margin-top: 20px;"><strong>Quotation #:</strong> ${quoteNumber}</p>
       <p><strong>Date:</strong> ${date}</p>
       <p><strong>Received from:</strong> ${clientName}</p>
-      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;" border="1" cellpadding="8">
-        <thead>
+
+      <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;" border="1" cellpadding="10">
+        <thead style="background: #f3f0fa;">
           <tr>
-            <th>Qty</th>
-            <th>Description</th>
-            <th>Amount</th>
+            <th style="text-align: left;">Qty</th>
+            <th style="text-align: left;">Description</th>
+            <th style="text-align: right;">Amount</th>
           </tr>
         </thead>
         <tbody>`;
@@ -110,29 +112,41 @@ function exportPDF() {
   items.forEach(item => {
     const total = item.qty * item.price;
     subtotal += total;
-    const formattedTotal = isConvertedToZWL ? `ZWL $${(total * exchangeRate).toFixed(2)}` : `$${total.toFixed(2)}`;
-    html += `<tr><td>${item.qty}</td><td>${item.name}</td><td>${formattedTotal}</td></tr>`;
+    const formattedTotal = isConvertedToZWL
+      ? `ZWL $${(total * exchangeRate).toFixed(2)}`
+      : `$${total.toFixed(2)}`;
+    html += `<tr>
+      <td>${item.qty}</td>
+      <td>${item.name}</td>
+      <td style="text-align: right;">${formattedTotal}</td>
+    </tr>`;
   });
 
-  const finalTotal = isConvertedToZWL ? `ZWL $${(subtotal * exchangeRate).toFixed(2)}` : `$${subtotal.toFixed(2)}`;
-  html += `
-        </tbody>
+  const finalTotal = isConvertedToZWL
+    ? `ZWL $${(subtotal * exchangeRate).toFixed(2)}`
+    : `$${subtotal.toFixed(2)}`;
+
+  html += `</tbody>
       </table>
-      <p style="margin-top: 10px;"><strong>Subtotal:</strong> ${finalTotal}</p>
-      <p><strong>Total:</strong> ${finalTotal}</p>
-      <p style="margin-top: 50px;">This quotation is valid for: ____________________</p>
+
+      <p style="margin-top: 25px; font-size: 16px;"><strong>Subtotal:</strong> ${finalTotal}</p>
+      <p style="font-size: 16px;"><strong>Total:</strong> ${finalTotal}</p>
+
+      <p style="margin-top: 40px;">This quotation is valid for: ____________________</p>
       <p>Signature: _________________________</p>
     </div>`;
 
   printArea.innerHTML = html;
   printArea.style.display = 'block';
 
-  html2pdf()
-    .from(printArea)
-    .save()
-    .then(() => {
-      printArea.style.display = 'none';
-    });
+  html2pdf().from(printArea).set({
+    margin: 0.3,
+    filename: `${quoteNumber}.pdf`,
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  }).save().then(() => {
+    printArea.style.display = 'none';
+  });
 }
 
 function printInvoice() {
