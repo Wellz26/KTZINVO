@@ -24,7 +24,7 @@
   <section class="item-entry">
     <input type="text" id="itemName" placeholder="Item Name" />
     <input type="number" id="itemQty" placeholder="Quantity" min="1" />
-    <input type="number" id="itemPrice" placeholder="Price" min="0" step="0.01" />
+    <input type="number" id="itemPrice" placeholder="Price (USD)" min="0" step="0.01" />
     <button id="addItemBtn">Add Item</button>
   </section>
 
@@ -44,8 +44,9 @@
   </section>
 
   <section class="totals">
-    <p>Subtotal: $<span id="subtotal">0.00</span></p>
-    <p><strong>Total: $<span id="total">0.00</span></strong></p>
+    <p>Subtotal: <span id="subtotal">$0.00</span></p>
+    <p><strong>Total: <span id="total">$0.00</span></strong></p>
+    <button id="convertZWLBtn">Convert to ZWL</button>
   </section>
 
   <section class="actions">
@@ -57,45 +58,9 @@
     <p>&copy; 2025 Cathy’s Quotes/Invoice</p>
   </footer>
 
+  <div id="invoicePrintArea" style="display:none;"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="script.js"></script>
-
-  <div id="invoicePrintArea" style="display:none;">
-    <div class="invoice-wrapper">
-      <header class="invoice-header">
-        <h2>KONTROL TEKNIKS ZIMBABWE</h2>
-        <h3>HOME & GARDEN</h3>
-        <p><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
-        <p><strong>Email:</strong> cathy.linah@icloud.com | <strong>Phone:</strong> +263 772 600 749</p>
-      </header>
-
-      <section class="invoice-meta">
-        <p><strong>Quotation #:</strong> <span id="quoteNumber"></span></p>
-        <p><strong>Date:</strong> <span id="quoteDate"></span></p>
-        <p><strong>Received from:</strong> <span id="quoteClientName"></span></p>
-      </section>
-
-      <table class="invoice-table">
-        <thead>
-          <tr>
-            <th>Qty</th>
-            <th>Description</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody id="printItemList"></tbody>
-      </table>
-
-      <section class="invoice-totals">
-        <p><strong>Subtotal:</strong> $<span id="printSubtotal">0.00</span></p>
-        <p><strong>Total:</strong> $<span id="printTotal">0.00</span></p>
-      </section>
-
-      <section class="invoice-footer">
-        <p>This quotation is valid for: <span>.....................</span></p>
-        <p>Signature: _________________________</p>
-      </section>
-    </div>
-  </div>
 </body>
 </html>
