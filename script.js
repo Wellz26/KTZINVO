@@ -1,4 +1,6 @@
 let items = [];
+let isConvertedToZWL = false;
+let exchangeRate = 0;
 
 function addItem() {
   const name = document.getElementById('itemName').value.trim();
@@ -28,8 +30,8 @@ function updateTable() {
     row.innerHTML = `
       <td>${item.name}</td>
       <td>${item.qty}</td>
-      <td>$${item.price.toFixed(2)}</td>
-      <td>$${total.toFixed(2)}</td>
+      <td>${formatCurrency(item.price)}</td>
+      <td>${formatCurrency(total)}</td>
       <td>
         <button class="action-btn" onclick="editItem(${index})">Edit</button>
         <button class="action-btn" onclick="removeItem(${index})">Delete</button>
@@ -38,8 +40,24 @@ function updateTable() {
     tbody.appendChild(row);
   });
 
-  document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-  document.getElementById('total').textContent = subtotal.toFixed(2);
+  document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+  document.getElementById('total').textContent = formatCurrency(subtotal);
+}
+
+function formatCurrency(value) {
+  if (isConvertedToZWL && exchangeRate > 0) {
+    return `ZWL $${(value * exchangeRate).toFixed(2)}`;
+  }
+  return `$${value.toFixed(2)}`;
+}
+
+function convertToZWL() {
+  const rate = prompt("Enter exchange rate (USD to ZWL):");
+  if (rate && !isNaN(rate)) {
+    exchangeRate = parseFloat(rate);
+    isConvertedToZWL = true;
+    updateTable();
+  }
 }
 
 function removeItem(index) {
@@ -66,44 +84,54 @@ function exportPDF() {
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
   const quoteNumber = `QT-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
 
-  document.getElementById('quoteClientName').textContent = clientName;
-  document.getElementById('quoteDate').textContent = date;
-  document.getElementById('quoteNumber').textContent = quoteNumber;
+  const printArea = document.getElementById('invoicePrintArea');
+  let html = `
+    <div style="font-family: Poppins, sans-serif; padding: 20px;">
+      <div style="background: #eae6f8; padding: 15px;">
+        <h2 style="margin: 0; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
+        <p>HOME & GARDEN</p>
+        <p><strong>Locations:</strong> Zonkizizwe Mall, Cecil Ave, Sawanga Mall</p>
+        <p><strong>Email:</strong> cathy.linah@icloud.com | <strong>Phone:</strong> +263 772 600 749</p>
+      </div>
+      <p><strong>Quotation #:</strong> ${quoteNumber}</p>
+      <p><strong>Date:</strong> ${date}</p>
+      <p><strong>Received from:</strong> ${clientName}</p>
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;" border="1" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Qty</th>
+            <th>Description</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>`;
 
-  const printList = document.getElementById('printItemList');
-  printList.innerHTML = '';
   let subtotal = 0;
-
-  items.forEach((item) => {
+  items.forEach(item => {
     const total = item.qty * item.price;
     subtotal += total;
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${item.qty}</td>
-      <td>${item.name}</td>
-      <td>$${total.toFixed(2)}</td>
-    `;
-    printList.appendChild(row);
+    const formattedTotal = isConvertedToZWL ? `ZWL $${(total * exchangeRate).toFixed(2)}` : `$${total.toFixed(2)}`;
+    html += `<tr><td>${item.qty}</td><td>${item.name}</td><td>${formattedTotal}</td></tr>`;
   });
 
-  document.getElementById('printSubtotal').textContent = subtotal.toFixed(2);
-  document.getElementById('printTotal').textContent = subtotal.toFixed(2);
+  const finalTotal = isConvertedToZWL ? `ZWL $${(subtotal * exchangeRate).toFixed(2)}` : `$${subtotal.toFixed(2)}`;
+  html += `
+        </tbody>
+      </table>
+      <p style="margin-top: 10px;"><strong>Subtotal:</strong> ${finalTotal}</p>
+      <p><strong>Total:</strong> ${finalTotal}</p>
+      <p style="margin-top: 50px;">This quotation is valid for: ____________________</p>
+      <p>Signature: _________________________</p>
+    </div>`;
 
-  const invoice = document.getElementById('invoicePrintArea');
-  invoice.style.display = 'block';
+  printArea.innerHTML = html;
+  printArea.style.display = 'block';
 
   html2pdf()
-    .from(invoice)
-    .set({
-      margin: 0.3,
-      filename: `${quoteNumber}.pdf`,
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-    })
+    .from(printArea)
     .save()
     .then(() => {
-      invoice.style.display = 'none';
+      printArea.style.display = 'none';
     });
 }
 
@@ -113,14 +141,7 @@ function printInvoice() {
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addItemBtn').addEventListener('click', addItem);
+  document.getElementById('convertZWLBtn').addEventListener('click', convertToZWL);
   document.getElementById('pdfBtn').addEventListener('click', exportPDF);
   document.getElementById('printBtn').addEventListener('click', printInvoice);
 });
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(reg => console.log('Service Worker registered:', reg.scope))
-      .catch(err => console.error('Service Worker registration failed:', err));
-  });
-}
