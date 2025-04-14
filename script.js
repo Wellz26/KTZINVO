@@ -84,57 +84,72 @@ function clearInputs() {
 }
 
 function exportPDF() {
-  const clientName = document.getElementById('clientName').value.trim() || 'N/A';
+  const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
   const quoteNumber = `QT-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
-
   const printArea = document.getElementById('invoicePrintArea');
+
   let html = `
-    <div style="font-family: 'Poppins', sans-serif; padding: 40px; max-width: 800px; margin: auto;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; background: #eae6f8; padding: 20px; border-radius: 6px;">
-        <div>
-          <h2 style="margin: 0; font-size: 22px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
-          <h3 style="margin: 4px 0 8px; font-size: 15px; color: #7d52c1;">HOME & GARDEN</h3>
-          <p style="margin: 0; font-size: 13px;"><strong>Locations:</strong> Zonkizizwe Mall, 96 Cecil Ave, Sawanga Mall</p>
-        </div>
-        <div style="text-align: right; font-size: 13px;">
-          <p><strong>Email:</strong> cathy.linah@icloud.com</p>
-          <p><strong>Phone:</strong> +263 772 600 749</p>
+    <div style="font-family: 'Poppins', sans-serif; color: #2e1544; padding: 40px; width: 100%; max-width: 900px; margin: auto;">
+      <div style="background: #eae6f8; padding: 20px 25px; border-radius: 8px; margin-bottom: 30px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div style="max-width: 65%;">
+            <h2 style="margin: 0; font-size: 22px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
+            <h3 style="margin: 5px 0 10px; font-size: 16px; color: #7d52c1;">HOME & GARDEN</h3>
+            <p style="margin: 0; font-size: 13px;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
+          </div>
+          <div style="text-align: right; font-size: 13px;">
+            <p style="margin: 0;"><strong>Email:</strong> cathy.linah@icloud.com</p>
+            <p style="margin: 5px 0;"><strong>Phone:</strong> +263 772 600 749</p>
+          </div>
         </div>
       </div>
 
-      <div style="margin-top: 30px; font-size: 14px;">
+      <div style="margin-bottom: 20px; font-size: 14px;">
         <p><strong>Quotation #:</strong> ${quoteNumber}</p>
         <p><strong>Date:</strong> ${date}</p>
         <p><strong>Received from:</strong> ${clientName}</p>
       </div>
 
-      <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px;" border="1" cellpadding="10">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
         <thead style="background: #f3f0fa;">
           <tr>
-            <th style="text-align: left; width: 15%;">Qty</th>
-            <th style="text-align: left;">Description</th>
-            <th style="text-align: right; width: 25%;">Amount</th>
+            <th style="padding: 10px; text-align: left; width: 15%;">Qty</th>
+            <th style="padding: 10px; text-align: left;">Description</th>
+            <th style="padding: 10px; text-align: right; width: 25%;">Amount</th>
           </tr>
         </thead>
         <tbody>`;
 
   let subtotal = 0;
-  items.forEach((item, i) => {
+  items.forEach(item => {
     const total = item.qty * item.price;
     subtotal += total;
-    const amount = isConvertedToZWL ? `ZWL $${(total * exchangeRate).toFixed(2)}` : `$${total.toFixed(2)}`;
-    html += `<tr><td>${item.qty}</td><td>${item.name}</td><td style="text-align: right;">${amount}</td></tr>`;
+    const formattedTotal = isConvertedToZWL
+      ? `ZWL $${(total * exchangeRate).toFixed(2)}`
+      : `$${total.toFixed(2)}`;
+    html += `
+      <tr>
+        <td style="padding: 10px;">${item.qty}</td>
+        <td style="padding: 10px;">${item.name}</td>
+        <td style="padding: 10px; text-align: right;">${formattedTotal}</td>
+      </tr>`;
   });
 
-  const totalFinal = isConvertedToZWL ? `ZWL $${(subtotal * exchangeRate).toFixed(2)}` : `$${subtotal.toFixed(2)}`;
-  html += `</tbody></table>
-      <div style="margin-top: 25px; text-align: right; font-size: 15px;">
-        <p><strong>Subtotal:</strong> ${totalFinal}</p>
-        <p><strong>Total:</strong> ${totalFinal}</p>
+  const finalTotal = isConvertedToZWL
+    ? `ZWL $${(subtotal * exchangeRate).toFixed(2)}`
+    : `$${subtotal.toFixed(2)}`;
+
+  html += `
+        </tbody>
+      </table>
+
+      <div style="margin-top: 30px; font-size: 14px;">
+        <p><strong>Subtotal:</strong> ${finalTotal}</p>
+        <p><strong>Total:</strong> ${finalTotal}</p>
       </div>
 
-      <div style="margin-top: 50px; font-size: 13px;">
+      <div style="margin-top: 60px; font-size: 13px;">
         <p>This quotation is valid for: ____________________</p>
         <p>Signature: _________________________</p>
       </div>
@@ -144,7 +159,7 @@ function exportPDF() {
   printArea.style.display = 'block';
 
   html2pdf().from(printArea).set({
-    margin: 0.5,
+    margin: 0.3,
     filename: `${quoteNumber}.pdf`,
     html2canvas: { scale: 2 },
     jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
