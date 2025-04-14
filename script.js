@@ -108,7 +108,7 @@ function exportPDF() {
       <div style="margin-bottom: 20px; font-size: 14px;">
         <p><strong>Quotation #:</strong> ${quoteNumber}</p>
         <p><strong>Date:</strong> ${date}</p>
-        <p><strong>Received from:</strong> ${clientName}</p>
+        <p><strong>Issued To:</strong> ${clientName}</p>
       </div>
 
       <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
