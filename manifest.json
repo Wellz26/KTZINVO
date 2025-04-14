@@ -1,11 +1,10 @@
 {
   "name": "Cathy’s Quotes/Invoice",
-  "short_name": "CathyInvoice",
-  "description": "Create professional quotations and invoices, online and offline.",
+  "short_name": "Invoice",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#fdfcf8",
-  "theme_color": "#eae6f8",
+  "theme_color": "#EAE6F8",
+  "background_color": "#FDFCF8",
   "orientation": "portrait",
   "icons": [
     {
