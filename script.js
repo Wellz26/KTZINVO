@@ -125,9 +125,7 @@ function exportPDF() {
   items.forEach(item => {
     const total = item.qty * item.price;
     subtotal += total;
-    const formattedTotal = isConvertedToZWL
-      ? `ZWL $${(total * exchangeRate).toFixed(2)}`
-      : `$${total.toFixed(2)}`;
+    const formattedTotal = formatCurrency(total);
     html += `
       <tr>
         <td style="padding: 10px;">${item.qty}</td>
@@ -136,9 +134,7 @@ function exportPDF() {
       </tr>`;
   });
 
-  const finalTotal = isConvertedToZWL
-    ? `ZWL $${(subtotal * exchangeRate).toFixed(2)}`
-    : `$${subtotal.toFixed(2)}`;
+  const finalTotal = formatCurrency(subtotal);
 
   html += `
         </tbody>
@@ -158,12 +154,20 @@ function exportPDF() {
   printArea.innerHTML = html;
   printArea.style.display = 'block';
 
-  html2pdf().from(printArea).set({
-    margin: 0.3,
+  html2pdf().set({
+    margin: 0,
     filename: `${quoteNumber}.pdf`,
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-  }).save().then(() => {
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      scrollY: 0
+    },
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait'
+    }
+  }).from(printArea).save().then(() => {
     printArea.style.display = 'none';
   });
 }
