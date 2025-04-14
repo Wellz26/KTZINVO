@@ -1,85 +1,97 @@
-/* Global Styles */
+/* ============================
+   Cathy’s Quotes/Invoice - style.css
+   ============================ */
+
+:root {
+  --primary: #4b2c76;
+  --secondary: #7d52c1;
+  --accent: #eae6f8;
+  --bg: #fdfcf8;
+  --dark: #2e1544;
+  --muted: #ccc;
+  --border-radius: 6px;
+  --font: 'Poppins', sans-serif;
+}
+
 body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #fdfcf8;
-  color: #2e1544;
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--dark);
   margin: 0;
   padding: 0;
   line-height: 1.6;
 }
 
-header {
+header.app-header {
   display: flex;
   align-items: center;
-  background-color: #eae6f8;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  gap: 1rem;
+  background-color: var(--accent);
+  padding: 1.25rem 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .logo {
   width: 48px;
   height: 48px;
-  margin-right: 1rem;
 }
 
 header h1 {
   font-size: 1.5rem;
-  color: #4b2c76;
+  color: var(--primary);
 }
 
-/* Input Sections */
+main {
+  max-width: 960px;
+  margin: auto;
+  padding: 2rem;
+}
+
 .client-info,
 .item-entry {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  padding: 1.5rem 2rem;
-  background: #f3f0fa;
-  justify-content: space-between;
+  margin-bottom: 1.5rem;
 }
 
 .client-info input,
 .item-entry input {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
   flex: 1;
-  min-width: 150px;
+  min-width: 180px;
+  padding: 0.75rem;
+  border: 1px solid var(--muted);
+  border-radius: var(--border-radius);
 }
 
 .item-entry button {
-  background-color: #7d52c1;
-  color: #fff;
+  background-color: var(--secondary);
+  color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 6px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s;
 }
 
 .item-entry button:hover {
-  background-color: #5e3ea1;
+  background-color: var(--primary);
 }
 
-/* Table Styles */
-.invoice-table {
-  padding: 2rem;
-  overflow-x: auto;
-}
-
-table {
+.invoice-table table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
-th, td {
-  padding: 1rem;
+.invoice-table th,
+.invoice-table td {
   border-bottom: 1px solid #ddd;
+  padding: 0.75rem;
   text-align: left;
 }
 
-td:last-child {
+.invoice-table td:last-child {
   text-align: center;
 }
 
@@ -96,28 +108,29 @@ button.action-btn:hover {
   background-color: #c9302c;
 }
 
-/* Totals */
 .totals {
-  padding: 2rem;
-  background-color: #fafafa;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  background: #fafafa;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
 }
 
-/* Action Buttons */
 .actions {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
   gap: 1rem;
-  padding: 2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .actions button {
-  background-color: #4b2c76;
+  background-color: var(--primary);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
   font-size: 1rem;
-  border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s ease;
 }
@@ -128,94 +141,49 @@ button.action-btn:hover {
 
 footer {
   text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
+  padding: 1.5rem;
+  font-size: 0.85rem;
   color: #777;
+  background: var(--bg);
+  border-top: 1px solid #eee;
 }
 
-/* Printable Invoice Area */
+/* Printable Area */
 #invoicePrintArea {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font);
   background: white;
-  padding: 2rem;
+  color: #000;
   max-width: 800px;
   margin: auto;
-  color: #000;
+  padding: 40px;
 }
 
-.invoice-wrapper {
-  border: 1px solid #ccc;
-  padding: 2rem;
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #invoicePrintArea, #invoicePrintArea * {
+    visibility: visible;
+  }
+  #invoicePrintArea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 }
 
-.invoice-header h2 {
-  margin: 0;
-  font-size: 1.6rem;
-  color: #4b2c76;
-}
-
-.invoice-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #7d52c1;
-}
-
-.invoice-header p {
-  margin: 4px 0;
-  font-size: 0.95rem;
-}
-
-.invoice-meta {
-  margin: 1.5rem 0;
-  font-size: 1rem;
-}
-
-.invoice-meta p {
-  margin: 4px 0;
-}
-
-#invoicePrintArea .invoice-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-#invoicePrintArea .invoice-table th,
-#invoicePrintArea .invoice-table td {
-  border: 1px solid #000;
-  padding: 0.75rem;
-  text-align: left;
-}
-
-#invoicePrintArea td:last-child {
-  text-align: right;
-}
-
-.invoice-totals {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-.invoice-footer {
-  margin-top: 2rem;
-  font-size: 1rem;
-}
-
-.invoice-footer p {
-  margin: 0.5rem 0;
-}
-
-/* Responsive Actions */
 @media (max-width: 600px) {
+  .client-info,
+  .item-entry {
+    flex-direction: column;
+  }
   .actions {
     flex-direction: column;
     align-items: center;
   }
-
   .actions button {
     width: 100%;
-    max-width: 300px;
+    max-width: 320px;
   }
 }
