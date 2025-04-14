@@ -22,6 +22,16 @@ body {
   line-height: 1.6;
 }
 
+/* ✅ iOS Zoom Fix + Touch Enhancements */
+input,
+button,
+select,
+textarea {
+  font-size: 16px !important;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
 header.app-header {
   display: flex;
   align-items: center;
