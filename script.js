@@ -184,7 +184,6 @@ function exportPDF() {
   setTimeout(() => {
     html2pdf().set({
       margin: 0,
-      filename: `${docNumber}.pdf`,
       html2canvas: {
         scale: 2,
         useCORS: true,
@@ -195,8 +194,17 @@ function exportPDF() {
         format: 'a4',
         orientation: 'portrait'
       },
-      enableLinks: false // ✅ disables hyperlinks in exported PDF
-    }).from(printArea).save().then(() => {
+      enableLinks: false
+    }).from(printArea).outputPdf('blob').then((blob) => {
+      const blobURL = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobURL;
+      a.download = `${docNumber}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobURL);
+
       printArea.innerHTML = '';
       printArea.style.visibility = 'hidden';
       printArea.style.position = 'absolute';
