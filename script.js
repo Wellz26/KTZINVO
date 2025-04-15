@@ -5,6 +5,7 @@
 let items = [];
 let isConvertedToZWL = false;
 let exchangeRate = 0;
+let isInvoice = false; // false = Quotation, true = Invoice
 
 function addItem() {
   const name = document.getElementById('itemName').value.trim();
@@ -86,7 +87,9 @@ function clearInputs() {
 function exportPDF() {
   const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
-  const quoteNumber = `QT-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
+
+  const docPrefix = isInvoice ? 'INV' : 'QT';
+  const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const printArea = document.getElementById('invoicePrintArea');
 
   let html = `
@@ -107,7 +110,7 @@ function exportPDF() {
         </div>
 
         <div style="margin-bottom: 20px; font-size: 14px;">
-          <p><strong>Quotation #:</strong> ${quoteNumber}</p>
+          <p><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
           <p><strong>Date:</strong> ${date}</p>
           <p><strong>Issued To:</strong> ${clientName}</p>
         </div>
@@ -147,7 +150,7 @@ function exportPDF() {
         </div>
 
         <div style="margin-top: 60px; font-size: 13px;">
-          <p>This quotation is valid for: ____________________</p>
+          <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid for: ____________________</p>
           <p>Signature: _________________________</p>
         </div>
       </div>
@@ -158,7 +161,7 @@ function exportPDF() {
 
   html2pdf().set({
     margin: 0,
-    filename: `${quoteNumber}.pdf`,
+    filename: `${docNumber}.pdf`,
     html2canvas: {
       scale: 2,
       useCORS: true,
@@ -183,6 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('convertZWLBtn').addEventListener('click', convertToZWL);
   document.getElementById('pdfBtn').addEventListener('click', exportPDF);
   document.getElementById('printBtn').addEventListener('click', printInvoice);
+
+  // 🔄 Toggle logic
+  document.getElementById('docTypeToggle').addEventListener('change', function () {
+    isInvoice = this.checked;
+    document.getElementById('docTypeLabel').textContent = isInvoice ? 'Invoice' : 'Quotation';
+    document.querySelector('h1').textContent = `Cathy’s ${isInvoice ? 'Invoice' : 'Quotes'}`;
+  });
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
