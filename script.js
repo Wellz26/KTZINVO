@@ -194,13 +194,14 @@ function exportPDF() {
         unit: 'mm',
         format: 'a4',
         orientation: 'portrait'
-      }
+      },
+      enableLinks: false // ✅ disables hyperlinks in exported PDF
     }).from(printArea).save().then(() => {
       printArea.innerHTML = '';
       printArea.style.visibility = 'hidden';
       printArea.style.position = 'absolute';
     });
-  }, 200);
+  }, 250);
 }
 
 function printInvoice() {
@@ -243,3 +244,4 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error('❌ Service Worker failed:', err));
   }
 });
+
