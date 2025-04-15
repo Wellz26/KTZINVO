@@ -87,19 +87,20 @@ function clearInputs() {
 function exportPDF() {
   const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
-
   const docPrefix = isInvoice ? 'INV' : 'QT';
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const printArea = document.getElementById('invoicePrintArea');
 
   printArea.style.visibility = 'visible';
   printArea.style.position = 'static';
+  printArea.style.display = 'block';
+  printArea.style.width = '100%';
+  printArea.innerHTML = ''; // Reset content
 
   let html = `
   <div style="width: 100%; display: flex; justify-content: center; padding: 40px 20px; box-sizing: border-box;">
-    <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 900px; box-sizing: border-box; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.05);">
+    <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 800px; box-sizing: border-box; border-radius: 12px;">
       
-      <!-- Header Section -->
       <div style="background: #eae6f8; padding: 30px 35px; border-radius: 12px; margin-bottom: 40px;">
         <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
           <div style="flex: 1 1 60%;">
@@ -114,14 +115,12 @@ function exportPDF() {
         </div>
       </div>
 
-      <!-- Meta Section -->
       <div style="margin-bottom: 30px; font-size: 15px;">
-        <p style="margin: 6px 0;"><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
-        <p style="margin: 6px 0;"><strong>Date:</strong> ${date}</p>
-        <p style="margin: 6px 0;"><strong>Issued To:</strong> ${clientName}</p>
+        <p><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Issued To:</strong> ${clientName}</p>
       </div>
 
-      <!-- Table -->
       <table style="width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 20px;">
         <thead style="background: #f3f0fa;">
           <tr>
@@ -131,33 +130,30 @@ function exportPDF() {
           </tr>
         </thead>
         <tbody>`;
-        
-let subtotal = 0;
-items.forEach(item => {
-  const total = item.qty * item.price;
-  subtotal += total;
-  const formattedTotal = formatCurrency(total);
-  html += `
+
+  let subtotal = 0;
+  items.forEach(item => {
+    const total = item.qty * item.price;
+    subtotal += total;
+    html += `
           <tr>
             <td style="padding: 14px;">${item.qty}</td>
             <td style="padding: 14px;">${item.name}</td>
-            <td style="padding: 14px; text-align: right;">${formattedTotal}</td>
+            <td style="padding: 14px; text-align: right;">${formatCurrency(total)}</td>
           </tr>`;
-});
+  });
 
-const finalTotal = formatCurrency(subtotal);
+  const finalTotal = formatCurrency(subtotal);
 
-html += `
+  html += `
         </tbody>
       </table>
 
-      <!-- Totals -->
       <div style="margin-top: 40px; font-size: 15px;">
         <p><strong>Subtotal:</strong> ${finalTotal}</p>
         <p><strong>Total:</strong> ${finalTotal}</p>
       </div>
 
-      <!-- Footer -->
       <div style="margin-top: 60px; font-size: 14px;">
         <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid for: ________________________________</p>
         <p>Signature: ______________________________________</p>
@@ -168,18 +164,12 @@ html += `
   printArea.innerHTML = html;
 
   setTimeout(() => {
-    printArea.style.width = '100vw';
-    printArea.style.display = 'flex';
-    printArea.style.justifyContent = 'center';
-    printArea.style.alignItems = 'center';
-
     html2pdf().set({
       margin: 0,
       filename: `${docNumber}.pdf`,
       html2canvas: {
         scale: 2,
-        useCORS: false,
-        allowTaint: true,
+        useCORS: true,
         scrollY: 0
       },
       jsPDF: {
@@ -188,10 +178,11 @@ html += `
         orientation: 'portrait'
       }
     }).from(printArea).save().then(() => {
+      printArea.innerHTML = '';
       printArea.style.visibility = 'hidden';
       printArea.style.position = 'absolute';
     });
-  }, 150);
+  }, 200);
 }
 
 function printInvoice() {
