@@ -5,7 +5,7 @@
 let items = [];
 let isConvertedToZWL = false;
 let exchangeRate = 0;
-let isInvoice = false; // false = Quotation, true = Invoice
+let isInvoice = false;
 
 function addItem() {
   const name = document.getElementById('itemName').value.trim();
@@ -92,6 +92,10 @@ function exportPDF() {
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const printArea = document.getElementById('invoicePrintArea');
 
+  // Update print area styles to ensure Safari renders it
+  printArea.style.visibility = 'visible';
+  printArea.style.position = 'static';
+
   let html = `
     <div style="display: flex; justify-content: center;">
       <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 40px; width: 100%; max-width: 900px;">
@@ -157,24 +161,29 @@ function exportPDF() {
     </div>`;
 
   printArea.innerHTML = html;
-  printArea.style.display = 'block';
 
-  html2pdf().set({
-    margin: 0,
-    filename: `${docNumber}.pdf`,
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      scrollY: 0
-    },
-    jsPDF: {
-      unit: 'mm',
-      format: 'a4',
-      orientation: 'portrait'
-    }
-  }).from(printArea).save().then(() => {
-    printArea.style.display = 'none';
-  });
+  // Let rendering settle before PDF generation
+  setTimeout(() => {
+    html2pdf().set({
+      margin: 0,
+      filename: `${docNumber}.pdf`,
+      html2canvas: {
+        scale: 2,
+        useCORS: false,
+        allowTaint: true,
+        scrollY: 0
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait'
+      }
+    }).from(printArea).save().then(() => {
+      // Reset print area for Safari
+      printArea.style.visibility = 'hidden';
+      printArea.style.position = 'absolute';
+    });
+  }, 150); // 150ms delay for Safari rendering
 }
 
 function printInvoice() {
@@ -187,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('pdfBtn').addEventListener('click', exportPDF);
   document.getElementById('printBtn').addEventListener('click', printInvoice);
 
-  // 🔄 Toggle logic
   document.getElementById('docTypeToggle').addEventListener('change', function () {
     isInvoice = this.checked;
     document.getElementById('docTypeLabel').textContent = isInvoice ? 'Invoice' : 'Quotation';
