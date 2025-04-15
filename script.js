@@ -84,6 +84,20 @@ function clearInputs() {
   document.getElementById('itemPrice').value = '';
 }
 
+// ✅ Clear All Function
+function clearAll() {
+  items = [];
+  isConvertedToZWL = false;
+  exchangeRate = 0;
+
+  document.getElementById('clientName').value = '';
+  document.getElementById('invoiceDate').value = '';
+  clearInputs();
+  updateTable();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // 🧠 ADD: Date +21 days for "Valid Until"
 function getValidUntilDate(startDate) {
   const base = new Date(startDate);
@@ -205,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('convertZWLBtn').addEventListener('click', convertToZWL);
   document.getElementById('pdfBtn').addEventListener('click', exportPDF);
   document.getElementById('printBtn').addEventListener('click', printInvoice);
+  document.getElementById('clearBtn').addEventListener('click', clearAll); // ✅ Hook Clear All
 
   document.getElementById('docTypeToggle').addEventListener('change', function () {
     isInvoice = this.checked;
