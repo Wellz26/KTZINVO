@@ -96,13 +96,13 @@ function exportPDF() {
   printArea.style.position = 'static';
 
   let html = `
-    <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-      <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 40px; width: 100%; max-width: 900px; box-sizing: border-box; margin: 0 auto;">
-        <div style="background: #eae6f8; padding: 20px 25px; border-radius: 8px; margin-bottom: 30px;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div style="max-width: 65%;">
+    <div style="width: 100%; display: flex; justify-content: center;">
+      <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 50px 60px; width: 100%; max-width: 800px; box-sizing: border-box; border-radius: 10px;">
+        <div style="background: #eae6f8; padding: 25px 30px; border-radius: 10px; margin-bottom: 30px;">
+          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1 1 60%;">
               <h2 style="margin: 0; font-size: 22px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
-              <h3 style="margin: 5px 0 10px; font-size: 16px; color: #7d52c1;">HOME & GARDEN</h3>
+              <h3 style="margin: 6px 0 10px; font-size: 16px; color: #7d52c1;">HOME & GARDEN</h3>
               <p style="margin: 0; font-size: 13px;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
             </div>
             <div style="text-align: right; font-size: 13px;">
@@ -112,18 +112,20 @@ function exportPDF() {
           </div>
         </div>
 
-        <div style="margin-bottom: 20px; font-size: 14px;">
-          <p><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
-          <p><strong>Date:</strong> ${date}</p>
-          <p><strong>Issued To:</strong> ${clientName}</p>
+        <div style="margin-bottom: 25px; font-size: 14px; display: flex; justify-content: space-between;">
+          <div>
+            <p><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
+            <p><strong>Date:</strong> ${date}</p>
+            <p><strong>Issued To:</strong> ${clientName}</p>
+          </div>
         </div>
 
-        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px;">
           <thead style="background: #f3f0fa;">
             <tr>
-              <th style="padding: 10px; text-align: left; width: 15%;">Qty</th>
-              <th style="padding: 10px; text-align: left;">Description</th>
-              <th style="padding: 10px; text-align: right; width: 25%;">Amount</th>
+              <th style="padding: 12px; text-align: left;">Qty</th>
+              <th style="padding: 12px; text-align: left;">Description</th>
+              <th style="padding: 12px; text-align: right;">Amount</th>
             </tr>
           </thead>
           <tbody>`;
@@ -135,9 +137,9 @@ function exportPDF() {
     const formattedTotal = formatCurrency(total);
     html += `
             <tr>
-              <td style="padding: 10px;">${item.qty}</td>
-              <td style="padding: 10px;">${item.name}</td>
-              <td style="padding: 10px; text-align: right;">${formattedTotal}</td>
+              <td style="padding: 12px;">${item.qty}</td>
+              <td style="padding: 12px;">${item.name}</td>
+              <td style="padding: 12px; text-align: right;">${formattedTotal}</td>
             </tr>`;
   });
 
