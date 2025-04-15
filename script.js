@@ -1,5 +1,5 @@
 // ==========================
-// Cathy’s Quotes/Invoice - script.js (Updated with Email Support)
+// Cathy’s Quotes/Invoice - script.js
 // ==========================
 
 let items = [];
@@ -190,32 +190,15 @@ function exportPDF() {
   }, 150);
 }
 
-function sendEmail() {
-  const clientName = document.getElementById('clientName').value || 'Client';
-  const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
-
-  let body = `Hello ${clientName},%0D%0A%0D%0A`;
-  body += `Please find your ${isInvoice ? 'Invoice' : 'Quotation'} dated ${date} below.%0D%0A%0D%0A`;
-
-  items.forEach(item => {
-    body += `• ${item.name} - Qty: ${item.qty}, Price: $${item.price}, Total: $${(item.qty * item.price).toFixed(2)}%0D%0A`;
-  });
-
-  const total = items.reduce((sum, item) => sum + item.qty * item.price, 0);
-  body += `%0D%0ASubtotal: $${total.toFixed(2)}%0D%0ATotal: $${total.toFixed(2)}%0D%0A%0D%0A`;
-  body += `Thank you for choosing Cathy’s Quotes/Invoice.%0D%0A%0D%0ARegards,%0D%0AKontrol Techniks Zimbabwe`;
-
-  const subject = `${isInvoice ? 'Invoice' : 'Quotation'} - ${date}`;
-  const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${body}`;
-
-  window.location.href = mailtoLink;
+function printInvoice() {
+  window.print();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addItemBtn').addEventListener('click', addItem);
   document.getElementById('convertZWLBtn').addEventListener('click', convertToZWL);
   document.getElementById('pdfBtn').addEventListener('click', exportPDF);
-  document.getElementById('emailBtn').addEventListener('click', sendEmail);
+  document.getElementById('printBtn').addEventListener('click', printInvoice);
 
   document.getElementById('docTypeToggle').addEventListener('change', function () {
     isInvoice = this.checked;
