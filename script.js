@@ -96,39 +96,38 @@ function exportPDF() {
   printArea.style.position = 'static';
 
   let html = `
-    <div style="width: 100%; display: flex; justify-content: center;">
-      <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 50px 60px; width: 100%; max-width: 800px; box-sizing: border-box; border-radius: 10px;">
-        <div style="background: #eae6f8; padding: 25px 30px; border-radius: 10px; margin-bottom: 30px;">
-          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-            <div style="flex: 1 1 60%;">
-              <h2 style="margin: 0; font-size: 22px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
-              <h3 style="margin: 6px 0 10px; font-size: 16px; color: #7d52c1;">HOME & GARDEN</h3>
-              <p style="margin: 0; font-size: 13px;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
-            </div>
-            <div style="text-align: right; font-size: 13px;">
-              <p style="margin: 0;"><strong>Email:</strong> cathy.linah@icloud.com</p>
-              <p style="margin: 5px 0;"><strong>Phone:</strong> +263 772 600 749</p>
-            </div>
+  <div style="width: 100%; display: flex; justify-content: center; padding: 40px 0;">
+    <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 820px; box-sizing: border-box; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+      
+      <div style="background: #eae6f8; padding: 30px; border-radius: 12px; margin-bottom: 40px;">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+          <div style="flex: 1 1 60%;">
+            <h2 style="margin: 0; font-size: 24px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
+            <h3 style="margin: 8px 0 12px; font-size: 17px; color: #7d52c1;">HOME & GARDEN</h3>
+            <p style="margin: 0; font-size: 13px;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
+          </div>
+          <div style="text-align: right; font-size: 13px;">
+            <p style="margin: 0;"><strong>Email:</strong> cathy.linah@icloud.com</p>
+            <p style="margin: 6px 0;"><strong>Phone:</strong> +263 772 600 749</p>
           </div>
         </div>
+      </div>
 
-        <div style="margin-bottom: 25px; font-size: 14px; display: flex; justify-content: space-between;">
-          <div>
-            <p><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
-            <p><strong>Date:</strong> ${date}</p>
-            <p><strong>Issued To:</strong> ${clientName}</p>
-          </div>
-        </div>
+      <div style="margin-bottom: 30px; font-size: 15px;">
+        <p><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Issued To:</strong> ${clientName}</p>
+      </div>
 
-        <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px;">
-          <thead style="background: #f3f0fa;">
-            <tr>
-              <th style="padding: 12px; text-align: left;">Qty</th>
-              <th style="padding: 12px; text-align: left;">Description</th>
-              <th style="padding: 12px; text-align: right;">Amount</th>
-            </tr>
-          </thead>
-          <tbody>`;
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 40px;">
+        <thead style="background: #f3f0fa;">
+          <tr>
+            <th style="padding: 14px; text-align: left;">Qty</th>
+            <th style="padding: 14px; text-align: left;">Description</th>
+            <th style="padding: 14px; text-align: right;">Amount</th>
+          </tr>
+        </thead>
+        <tbody>`;
 
   let subtotal = 0;
   items.forEach(item => {
@@ -146,20 +145,20 @@ function exportPDF() {
   const finalTotal = formatCurrency(subtotal);
 
   html += `
-          </tbody>
-        </table>
+        </tbody>
+      </table>
 
-        <div style="margin-top: 30px; font-size: 14px;">
-          <p><strong>Subtotal:</strong> ${finalTotal}</p>
-          <p><strong>Total:</strong> ${finalTotal}</p>
-        </div>
-
-        <div style="margin-top: 60px; font-size: 13px;">
-          <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid for: ____________________</p>
-          <p>Signature: _________________________</p>
-        </div>
+      <div style="margin-bottom: 50px; font-size: 15px;">
+        <p><strong>Subtotal:</strong> ${finalTotal}</p>
+        <p><strong>Total:</strong> ${finalTotal}</p>
       </div>
-    </div>`;
+
+      <div style="margin-top: 60px; font-size: 14px; line-height: 2;">
+        <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid for: __________________________</p>
+        <p>Signature: __________________________</p>
+      </div>
+    </div>
+  </div>`;
 
   printArea.innerHTML = html;
 
