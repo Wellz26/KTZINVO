@@ -88,12 +88,10 @@ function clearAll() {
   items = [];
   isConvertedToZWL = false;
   exchangeRate = 0;
-
   document.getElementById('clientName').value = '';
   document.getElementById('invoiceDate').value = '';
   clearInputs();
   updateTable();
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -184,6 +182,7 @@ function exportPDF() {
   setTimeout(() => {
     html2pdf().set({
       margin: 0,
+      filename: `${docNumber}.pdf`,
       html2canvas: {
         scale: 2,
         useCORS: true,
@@ -195,21 +194,12 @@ function exportPDF() {
         orientation: 'portrait'
       },
       enableLinks: false
-    }).from(printArea).outputPdf('blob').then((blob) => {
-      const blobURL = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = blobURL;
-      a.download = `${docNumber}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobURL);
-
+    }).from(printArea).save().then(() => {
       printArea.innerHTML = '';
       printArea.style.visibility = 'hidden';
       printArea.style.position = 'absolute';
     });
-  }, 250);
+  }, 200);
 }
 
 function printInvoice() {
