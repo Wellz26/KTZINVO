@@ -24,7 +24,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ✅ Input + Touch UX Fixes for PWA on Mobile */
 input,
 button,
 select,
@@ -166,7 +165,6 @@ footer {
   border-top: 1px solid #eee;
 }
 
-/* Printable Area — Responsive + A4 Print Support */
 #invoicePrintArea {
   font-family: var(--font);
   background: white;
@@ -187,12 +185,14 @@ footer {
 
 @media print {
   body {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
   }
 
   body * {
     visibility: hidden !important;
+    position: static !important;
   }
 
   #invoicePrintArea,
@@ -201,18 +201,17 @@ footer {
   }
 
   #invoicePrintArea {
-    position: absolute;
-    top: 0;
+    position: absolute !important;
     left: 0;
-    width: 210mm;
-    min-height: 297mm;
-    max-height: none;
-    padding: 20mm;
-    margin: 0;
-    box-sizing: border-box;
+    top: 0;
+    width: 100% !important;
+    min-height: 100vh !important;
+    padding: 40px !important;
     background: white !important;
-    color: black !important;
-    page-break-after: always;
+    color: #000 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    z-index: 9999 !important;
   }
 }
 
@@ -295,7 +294,6 @@ button:focus {
   }
 }
 
-/* ✅ Responsive Scroll Fix for Invoice Table */
 .invoice-table {
   width: 100%;
   overflow-x: auto;
