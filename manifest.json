@@ -1,6 +1,6 @@
 {
   "name": "Cathy’s Quotes/Invoice",
-  "short_name": "KTZ IQ",
+  "short_name": "KTZ-IQ",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#EAE6F8",
