@@ -108,7 +108,7 @@ function getValidUntilDate(startDate) {
 
 function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
   let html = `
-  <div id="printWrapper" style="width: 100%; display: flex; justify-content: center; padding: 40px 20px; box-sizing: border-box;">
+  <div style="width: 100%; display: flex; justify-content: center; padding: 40px 20px; box-sizing: border-box;">
     <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 800px; box-sizing: border-box; border-radius: 12px;">
       <div style="background: #eae6f8; padding: 30px 35px; border-radius: 12px; margin-bottom: 40px;">
         <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
@@ -206,19 +206,27 @@ function printInvoice() {
 
   printArea.innerHTML = generateInvoiceHTML(docNumber, clientName, date, validUntil);
   printArea.style.visibility = 'visible';
-  printArea.style.position = 'static';
+  printArea.style.position = 'absolute';
+  printArea.style.top = '0';
+  printArea.style.left = '0';
+  printArea.style.width = '100%';
+  printArea.style.height = 'auto';
   printArea.style.display = 'block';
+  printArea.style.zIndex = '9999';
+  printArea.style.background = '#fff';
 
-  setTimeout(() => {
-    window.print();
+  window.onafterprint = () => {
     printArea.innerHTML = '';
     printArea.style.visibility = 'hidden';
     printArea.style.position = 'absolute';
-  }, 500);
+    printArea.style.display = 'none';
+    window.onafterprint = null;
+  };
+
+  window.print();
 }
 
-// ✅ DOM INIT
-
+// DOM INIT
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addItemBtn').addEventListener('click', addItem);
   document.getElementById('convertZWLBtn').addEventListener('click', convertToZWL);
