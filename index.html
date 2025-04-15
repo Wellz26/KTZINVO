@@ -37,19 +37,22 @@
       <button id="addItemBtn" aria-label="Add Item">Add Item</button>
     </section>
 
+    <!-- ✅ SCROLLABLE TABLE FIX -->
     <section class="invoice-table">
-      <table aria-label="Invoice Item Table">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="itemList"></tbody>
-      </table>
+      <div style="overflow-x: auto;">
+        <table aria-label="Invoice Item Table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="itemList"></tbody>
+        </table>
+      </div>
     </section>
 
     <section class="totals">
