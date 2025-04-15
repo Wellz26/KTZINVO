@@ -115,7 +115,7 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
           <div style="flex: 1 1 60%;">
             <h2 style="margin: 0 0 8px; font-size: 24px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
             <h3 style="margin: 0 0 12px; font-size: 16px; color: #7d52c1;">HOME & GARDEN</h3>
-            <p style="margin: 0; font-size: 14px;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
+            <p style="margin: 0; font-size: 14px;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave Hillside Bulawayo, Sawanga Mall (Victoria Falls)</p>
           </div>
           <div style="flex: 1 1 35%; text-align: right; font-size: 14px; line-height: 1.8;">
             <p><strong>Email:</strong> cathy.linah@icloud.com</p>
