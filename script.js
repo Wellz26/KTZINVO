@@ -98,7 +98,7 @@ function clearAll() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 🧠 ADD: Date +21 days for "Valid Until"
+// 🧠 Date +21 days for "Valid Until"
 function getValidUntilDate(startDate) {
   const base = new Date(startDate);
   base.setDate(base.getDate() + 21);
@@ -214,12 +214,13 @@ function printInvoice() {
   window.print();
 }
 
+// ✅ DOM Load Hook
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addItemBtn').addEventListener('click', addItem);
   document.getElementById('convertZWLBtn').addEventListener('click', convertToZWL);
   document.getElementById('pdfBtn').addEventListener('click', exportPDF);
   document.getElementById('printBtn').addEventListener('click', printInvoice);
-  document.getElementById('clearBtn').addEventListener('click', clearAll); // ✅ Hook Clear All
+  document.getElementById('clearBtn').addEventListener('click', clearAll);
 
   document.getElementById('docTypeToggle').addEventListener('change', function () {
     isInvoice = this.checked;
@@ -227,9 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('h1').textContent = `Cathy’s ${isInvoice ? 'Invoice' : 'Quotes'}`;
   });
 
+  // PWA install service worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
-      .then(reg => console.log('Service Worker registered:', reg.scope))
-      .catch(err => console.error('Service Worker registration failed:', err));
+      .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+      .catch(err => console.error('❌ Service Worker failed:', err));
   }
 });
