@@ -64,7 +64,7 @@
     <section class="actions">
       <button id="printBtn">Print</button>
       <button id="pdfBtn">Export to PDF</button>
-      <button id="clearBtn">Clear All</button> <!-- ✅ CLEAR FUNCTION -->
+      <button id="clearBtn">Clear All</button>
     </section>
   </main>
 
@@ -72,10 +72,10 @@
     <p>&copy; 2025 Cathy’s Quotes/Invoice. Built for Kontrol Techniks Zimbabwe.</p>
   </footer>
 
-  <!-- Safari-safe hidden printable template for PDF generation -->
+  <!-- 🖨️ Hidden printable template -->
   <div id="invoicePrintArea" style="visibility: hidden; position: absolute; left: -9999px; top: 0;"></div>
 
-  <!-- Custom Install Banner -->
+  <!-- 📲 PWA Install Banner -->
   <div id="installBanner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #eae6f8; border: 1px solid #ccc; padding: 16px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <span style="font-family: 'Poppins', sans-serif; color: #4b2c76;">Install this app for a better experience.</span>
@@ -83,8 +83,8 @@
     </div>
   </div>
 
-  <!-- JS Libraries -->
+  <!-- 📦 Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="script.js" defer></script>
+  <script src="script.js?v=1.0.9" defer></script> <!-- Cache-busting for PWA -->
 </body>
 </html>
