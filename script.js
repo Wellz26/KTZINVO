@@ -84,11 +84,22 @@ function clearInputs() {
   document.getElementById('itemPrice').value = '';
 }
 
+// 🧠 ADD: Date +21 days for "Valid Until"
+function getValidUntilDate(startDate) {
+  const base = new Date(startDate);
+  base.setDate(base.getDate() + 21);
+  const yyyy = base.getFullYear();
+  const mm = String(base.getMonth() + 1).padStart(2, '0');
+  const dd = String(base.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 function exportPDF() {
   const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
   const docPrefix = isInvoice ? 'INV' : 'QT';
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
+  const validUntil = getValidUntilDate(date);
   const printArea = document.getElementById('invoicePrintArea');
 
   printArea.style.visibility = 'visible';
@@ -155,8 +166,8 @@ function exportPDF() {
       </div>
 
       <div style="margin-top: 60px; font-size: 14px;">
-        <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid for: ________________________________</p>
-        <p>Signature: ______________________________________</p>
+        <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid until: <strong>${validUntil}</strong></p>
+        <p>Signature: <strong>Linah M</strong></p>
       </div>
     </div>
   </div>`;
