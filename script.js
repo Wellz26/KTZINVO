@@ -133,6 +133,7 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
           <tr>
             <th style="padding: 14px; text-align: left;">Qty</th>
             <th style="padding: 14px; text-align: left;">Description</th>
+            <th style="padding: 14px; text-align: right;">Unit Price</th>
             <th style="padding: 14px; text-align: right;">Amount</th>
           </tr>
         </thead>
@@ -146,6 +147,7 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
           <tr>
             <td style="padding: 14px;">${item.qty}</td>
             <td style="padding: 14px;">${item.name}</td>
+            <td style="padding: 14px; text-align: right;">${formatCurrency(item.price)}</td>
             <td style="padding: 14px; text-align: right;">${formatCurrency(total)}</td>
           </tr>`;
   });
@@ -246,4 +248,5 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error('❌ Service Worker failed:', err));
   }
 });
+
 
