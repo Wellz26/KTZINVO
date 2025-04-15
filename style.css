@@ -29,12 +29,12 @@ input,
 button,
 select,
 textarea {
-  font-size: 16px !important; /* Prevent iOS zoom */
+  font-size: 16px !important;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
-  touch-action: manipulation; /* Disable double-tap zoom */
+  touch-action: manipulation;
 }
 
 header.app-header {
@@ -166,7 +166,6 @@ footer {
   border-top: 1px solid #eee;
 }
 
-/* Printable Area */
 /* Printable Area — Responsive + A4 Print Support */
 #invoicePrintArea {
   font-family: var(--font);
@@ -232,7 +231,6 @@ footer {
   }
 }
 
-
 .doc-toggle {
   display: flex;
   justify-content: flex-end;
@@ -289,6 +287,7 @@ button:focus {
   outline: 2px solid var(--secondary);
   outline-offset: 2px;
 }
+
 @media (max-width: 480px) {
   #invoicePrintArea {
     font-size: 90%;
@@ -296,3 +295,14 @@ button:focus {
   }
 }
 
+/* ✅ Responsive Scroll Fix for Invoice Table */
+.invoice-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.invoice-table table {
+  min-width: 600px;
+  width: 100%;
+  border-collapse: collapse;
+}
