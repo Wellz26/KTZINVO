@@ -306,3 +306,11 @@ button:focus {
   width: 100%;
   border-collapse: collapse;
 }
+
+#clearBtn {
+  background-color: #dc3545;
+}
+
+#clearBtn:hover {
+  background-color: #b02a37;
+}
