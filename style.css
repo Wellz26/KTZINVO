@@ -260,3 +260,7 @@ footer {
   background-color: var(--secondary);
 }
 
+button:focus {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
