@@ -167,6 +167,7 @@ footer {
 }
 
 /* Printable Area */
+/* Printable Area — Responsive + A4 Print Support */
 #invoicePrintArea {
   font-family: var(--font);
   background: white;
@@ -174,8 +175,15 @@ footer {
   width: 100%;
   max-width: 100%;
   margin: auto;
-  padding: 5vw;
+  padding: clamp(24px, 5vw, 60px);
   box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  #invoicePrintArea {
+    padding: 6vw 4vw;
+    font-size: 0.95rem;
+  }
 }
 
 @media print {
@@ -185,12 +193,12 @@ footer {
   }
 
   body * {
-    visibility: hidden;
+    visibility: hidden !important;
   }
 
   #invoicePrintArea,
   #invoicePrintArea * {
-    visibility: visible;
+    visibility: visible !important;
   }
 
   #invoicePrintArea {
@@ -203,6 +211,8 @@ footer {
     padding: 20mm;
     margin: 0;
     box-sizing: border-box;
+    background: white !important;
+    color: black !important;
     page-break-after: always;
   }
 }
