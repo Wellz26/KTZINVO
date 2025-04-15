@@ -88,10 +88,12 @@ function clearAll() {
   items = [];
   isConvertedToZWL = false;
   exchangeRate = 0;
+
   document.getElementById('clientName').value = '';
   document.getElementById('invoiceDate').value = '';
   clearInputs();
   updateTable();
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -106,7 +108,7 @@ function getValidUntilDate(startDate) {
 
 function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
   let html = `
-  <div style="width: 100%; display: flex; justify-content: center; padding: 40px 20px; box-sizing: border-box;">
+  <div id="printWrapper" style="width: 100%; display: flex; justify-content: center; padding: 40px 20px; box-sizing: border-box;">
     <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 800px; box-sizing: border-box; border-radius: 12px;">
       <div style="background: #eae6f8; padding: 30px 35px; border-radius: 12px; margin-bottom: 40px;">
         <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
@@ -183,16 +185,8 @@ function exportPDF() {
     html2pdf().set({
       margin: 0,
       filename: `${docNumber}.pdf`,
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        scrollY: 0
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait'
-      },
+      html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       enableLinks: false
     }).from(printArea).save().then(() => {
       printArea.innerHTML = '';
@@ -220,8 +214,10 @@ function printInvoice() {
     printArea.innerHTML = '';
     printArea.style.visibility = 'hidden';
     printArea.style.position = 'absolute';
-  }, 250);
+  }, 500);
 }
+
+// ✅ DOM INIT
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addItemBtn').addEventListener('click', addItem);
