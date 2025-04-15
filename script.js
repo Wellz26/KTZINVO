@@ -92,13 +92,12 @@ function exportPDF() {
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const printArea = document.getElementById('invoicePrintArea');
 
-  // Update print area styles to ensure Safari renders it
   printArea.style.visibility = 'visible';
   printArea.style.position = 'static';
 
   let html = `
-    <div style="display: flex; justify-content: center;">
-      <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 40px; width: 100%; max-width: 900px;">
+    <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+      <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 40px; width: 100%; max-width: 900px; box-sizing: border-box; margin: 0 auto;">
         <div style="background: #eae6f8; padding: 20px 25px; border-radius: 8px; margin-bottom: 30px;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start;">
             <div style="max-width: 65%;">
@@ -162,8 +161,12 @@ function exportPDF() {
 
   printArea.innerHTML = html;
 
-  // Let rendering settle before PDF generation
   setTimeout(() => {
+    printArea.style.width = '100vw';
+    printArea.style.display = 'flex';
+    printArea.style.justifyContent = 'center';
+    printArea.style.alignItems = 'center';
+
     html2pdf().set({
       margin: 0,
       filename: `${docNumber}.pdf`,
@@ -179,11 +182,10 @@ function exportPDF() {
         orientation: 'portrait'
       }
     }).from(printArea).save().then(() => {
-      // Reset print area for Safari
       printArea.style.visibility = 'hidden';
       printArea.style.position = 'absolute';
     });
-  }, 150); // 150ms delay for Safari rendering
+  }, 150);
 }
 
 function printInvoice() {
