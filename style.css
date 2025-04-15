@@ -171,24 +171,39 @@ footer {
   font-family: var(--font);
   background: white;
   color: #000;
-  max-width: 800px;
+  width: 100%;
+  max-width: 100%;
   margin: auto;
-  padding: 40px;
+  padding: 5vw;
+  box-sizing: border-box;
 }
 
 @media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
   body * {
     visibility: hidden;
   }
+
   #invoicePrintArea,
   #invoicePrintArea * {
     visibility: visible;
   }
+
   #invoicePrintArea {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 210mm;
+    min-height: 297mm;
+    max-height: none;
+    padding: 20mm;
+    margin: 0;
+    box-sizing: border-box;
+    page-break-after: always;
   }
 }
 
@@ -264,3 +279,10 @@ button:focus {
   outline: 2px solid var(--secondary);
   outline-offset: 2px;
 }
+@media (max-width: 480px) {
+  #invoicePrintArea {
+    font-size: 90%;
+    padding: 6vw 4vw;
+  }
+}
+
