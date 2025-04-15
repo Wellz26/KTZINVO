@@ -96,30 +96,33 @@ function exportPDF() {
   printArea.style.position = 'static';
 
   let html = `
-  <div style="width: 100%; display: flex; justify-content: center; padding: 40px 0;">
-    <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 820px; box-sizing: border-box; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+  <div style="width: 100%; display: flex; justify-content: center; padding: 40px 20px; box-sizing: border-box;">
+    <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 900px; box-sizing: border-box; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.05);">
       
-      <div style="background: #eae6f8; padding: 30px; border-radius: 12px; margin-bottom: 40px;">
+      <!-- Header Section -->
+      <div style="background: #eae6f8; padding: 30px 35px; border-radius: 12px; margin-bottom: 40px;">
         <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
           <div style="flex: 1 1 60%;">
-            <h2 style="margin: 0; font-size: 24px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
-            <h3 style="margin: 8px 0 12px; font-size: 17px; color: #7d52c1;">HOME & GARDEN</h3>
-            <p style="margin: 0; font-size: 13px;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
+            <h2 style="margin: 0 0 8px; font-size: 24px; color: #4b2c76;">KONTROL TEKNIKS ZIMBABWE</h2>
+            <h3 style="margin: 0 0 12px; font-size: 16px; color: #7d52c1;">HOME & GARDEN</h3>
+            <p style="margin: 0; font-size: 14px; line-height: 1.6;"><strong>Locations:</strong> Zonkizizwe Mall (Bradfield), 96 Cecil Ave (Hillside), Sawanga Mall (Victoria Falls)</p>
           </div>
-          <div style="text-align: right; font-size: 13px;">
+          <div style="flex: 1 1 35%; text-align: right; font-size: 14px; line-height: 1.8;">
             <p style="margin: 0;"><strong>Email:</strong> cathy.linah@icloud.com</p>
-            <p style="margin: 6px 0;"><strong>Phone:</strong> +263 772 600 749</p>
+            <p style="margin: 0;"><strong>Phone:</strong> +263 772 600 749</p>
           </div>
         </div>
       </div>
 
+      <!-- Meta Section -->
       <div style="margin-bottom: 30px; font-size: 15px;">
-        <p><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
-        <p><strong>Date:</strong> ${date}</p>
-        <p><strong>Issued To:</strong> ${clientName}</p>
+        <p style="margin: 6px 0;"><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
+        <p style="margin: 6px 0;"><strong>Date:</strong> ${date}</p>
+        <p style="margin: 6px 0;"><strong>Issued To:</strong> ${clientName}</p>
       </div>
 
-      <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 40px;">
+      <!-- Table -->
+      <table style="width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 20px;">
         <thead style="background: #f3f0fa;">
           <tr>
             <th style="padding: 14px; text-align: left;">Qty</th>
@@ -128,34 +131,36 @@ function exportPDF() {
           </tr>
         </thead>
         <tbody>`;
-
-  let subtotal = 0;
-  items.forEach(item => {
-    const total = item.qty * item.price;
-    subtotal += total;
-    const formattedTotal = formatCurrency(total);
-    html += `
-            <tr>
-              <td style="padding: 12px;">${item.qty}</td>
-              <td style="padding: 12px;">${item.name}</td>
-              <td style="padding: 12px; text-align: right;">${formattedTotal}</td>
-            </tr>`;
-  });
-
-  const finalTotal = formatCurrency(subtotal);
-
+        
+let subtotal = 0;
+items.forEach(item => {
+  const total = item.qty * item.price;
+  subtotal += total;
+  const formattedTotal = formatCurrency(total);
   html += `
+          <tr>
+            <td style="padding: 14px;">${item.qty}</td>
+            <td style="padding: 14px;">${item.name}</td>
+            <td style="padding: 14px; text-align: right;">${formattedTotal}</td>
+          </tr>`;
+});
+
+const finalTotal = formatCurrency(subtotal);
+
+html += `
         </tbody>
       </table>
 
-      <div style="margin-bottom: 50px; font-size: 15px;">
+      <!-- Totals -->
+      <div style="margin-top: 40px; font-size: 15px;">
         <p><strong>Subtotal:</strong> ${finalTotal}</p>
         <p><strong>Total:</strong> ${finalTotal}</p>
       </div>
 
-      <div style="margin-top: 60px; font-size: 14px; line-height: 2;">
-        <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid for: __________________________</p>
-        <p>Signature: __________________________</p>
+      <!-- Footer -->
+      <div style="margin-top: 60px; font-size: 14px;">
+        <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid for: ________________________________</p>
+        <p>Signature: ______________________________________</p>
       </div>
     </div>
   </div>`;
