@@ -5,7 +5,7 @@
 let items = [];
 let isConvertedToZWL = false;
 let exchangeRate = 0;
-let isInvoice = false;
+let docType = 'Quotation';
 
 function addItem() {
   const name = document.getElementById('itemName').value.trim();
@@ -124,7 +124,7 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
         </div>
       </div>
       <div style="margin-bottom: 30px; font-size: 15px;">
-        <p><strong>${isInvoice ? 'Invoice' : 'Quotation'} #:</strong> ${docNumber}</p>
+        <p><strong>${docType} #:</strong> ${docNumber}</p>
         <p><strong>Date:</strong> ${date}</p>
         <p><strong>Issued To:</strong> ${clientName}</p>
       </div>
@@ -162,7 +162,7 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
         <p><strong>Total:</strong> ${finalTotal}</p>
       </div>
       <div style="margin-top: 60px; font-size: 14px;">
-        <p>This ${isInvoice ? 'invoice' : 'quotation'} is valid until: <strong>${validUntil}</strong></p>
+        <p>This ${docType.toLowerCase()} is valid until: <strong>${validUntil}</strong></p>
         <p>Signature: <strong>Linah M</strong></p>
       </div>
     </div>
@@ -173,7 +173,7 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
 function exportPDF() {
   const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
-  const docPrefix = isInvoice ? 'INV' : 'QT';
+  const docPrefix = docType === 'Invoice' ? 'INV' : docType === 'Quotes' ? 'QT' : docType === 'Exports' ? 'EXP' : 'IMP';
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const validUntil = getValidUntilDate(date);
   const printArea = document.getElementById('invoicePrintArea');
@@ -201,7 +201,7 @@ function exportPDF() {
 function printInvoice() {
   const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
-  const docPrefix = isInvoice ? 'INV' : 'QT';
+  const docPrefix = docType === 'Invoice' ? 'INV' : docType === 'Quotes' ? 'QT' : docType === 'Exports' ? 'EXP' : 'IMP';
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const validUntil = getValidUntilDate(date);
   const printArea = document.getElementById('invoicePrintArea');
@@ -229,6 +229,7 @@ function printInvoice() {
 }
 
 // DOM INIT
+
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addItemBtn').addEventListener('click', addItem);
   document.getElementById('convertZWLBtn').addEventListener('click', convertToZWL);
@@ -236,10 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('printBtn').addEventListener('click', printInvoice);
   document.getElementById('clearBtn').addEventListener('click', clearAll);
 
-  document.getElementById('docTypeToggle').addEventListener('change', function () {
-    isInvoice = this.checked;
-    document.getElementById('docTypeLabel').textContent = isInvoice ? 'Invoice' : 'Quotation';
-    document.querySelector('h1').textContent = `Cathy’s ${isInvoice ? 'Invoice' : 'Quotes'}`;
+  document.getElementById('docTypeSelect').addEventListener('change', function () {
+    docType = this.value;
+    document.querySelector('h1').textContent = `Cathy’s ${docType}`;
   });
 
   if ('serviceWorker' in navigator) {
