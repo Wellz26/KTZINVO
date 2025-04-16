@@ -1,35 +1,50 @@
-const CACHE_NAME = 'cathy-invoice-v1';
+const CACHE_NAME = 'cathy-invoice-cache-v2';
+const OFFLINE_URL = 'offline.html';
+
 const ASSETS = [
-  './',
-  './index.html',
-  './style.css',
-  './script.js',
-  './manifest.json',
-  './icon.png',
-  'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js'
+  '/',
+  '/index.html',
+  '/style.css',
+  '/script.js',
+  '/manifest.json',
+  '/icon.png',
+  '/offline.html'
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(
+// Install & cache files
+self.addEventListener('install', event => {
+  event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
   self.skipWaiting();
 });
 
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(names =>
-      Promise.all(names.map(name => {
-        if (name !== CACHE_NAME) return caches.delete(name);
-      }))
+// Activate & clean up old caches
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
     )
   );
   self.clients.claim();
 });
 
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(res => res || fetch(e.request))
+// Intercept fetch requests
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        // Optional: cache updated responses
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        return response;
+      })
+      .catch(() =>
+        caches.match(event.request).then(
+          res => res || caches.match(OFFLINE_URL)
+        )
+      )
   );
 });
