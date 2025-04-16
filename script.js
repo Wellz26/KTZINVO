@@ -165,6 +165,11 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
         <p>This ${docType.toLowerCase()} is valid until: <strong>${validUntil}</strong></p>
         <p>Signature: <strong>Linah M</strong></p>
       </div>
+      <div style="margin-top: 40px; font-size: 14px; border-top: 1px dashed #ccc; padding-top: 20px;">
+        <p><strong>Banking Details:</strong></p>
+        <p><strong>USD ACCOUNT:</strong><br>STANBIC BANK<br>BELMONT BRANCH<br>9140000966400</p>
+        <p><strong>ZIG ACCOUNT:</strong><br>STANBIC BANK<br>BELMONT BRANCH<br>9140002769599</p>
+      </div>
     </div>
   </div>`;
   return html;
@@ -248,4 +253,5 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error('❌ Service Worker failed:', err));
   }
 });
+
 
