@@ -18,10 +18,14 @@
 
   <main>
     <section class="doc-toggle">
-      <label class="toggle-label">
-        <input type="checkbox" id="docTypeToggle" />
-        <span class="slider"></span>
-        <span class="doc-label" id="docTypeLabel">Quotation</span>
+      <label class="toggle-label" for="docTypeSelect">
+        <span class="doc-label">Document Type:</span>
+        <select id="docTypeSelect" aria-label="Document Type">
+          <option value="Invoice">Invoice</option>
+          <option value="Quotation">Quotes</option>
+          <option value="Export">Exports</option>
+          <option value="Import">Imports</option>
+        </select>
       </label>
     </section>
 
@@ -85,6 +89,6 @@
 
   <!-- 📦 Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="script.js?v=1.0.9" defer></script> <!-- Cache-busting for PWA -->
+  <script src="script.js?v=1.0.9" defer></script>
 </body>
 </html>
