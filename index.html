@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- ============================
+       Cathy’s Quotes/Invoice - index.html
+       ============================ -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#EAE6F8" />
@@ -9,14 +12,27 @@
   <link rel="icon" href="icon.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <title>Cathy’s Quotes/Invoice</title>
+
+  <!-- ✅ Register Service Worker for Offline Support -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+          .catch(err => console.error('❌ Service Worker failed:', err));
+      });
+    }
+  </script>
 </head>
 <body>
+  <!-- ✅ Header -->
   <header class="app-header">
     <img src="icon.png" alt="Cathy’s Logo" class="logo" />
-    <h1 id="docHeader">Cathy’s Invoice</h1>
+    <h1>Cathy’s Quotes/Invoice</h1>
   </header>
 
   <main>
+    <!-- ✅ Document Type Dropdown -->
     <section class="doc-toggle">
       <label class="toggle-label" for="docTypeSelect">
         <span class="doc-label">Document Type:</span>
@@ -29,16 +45,18 @@
       </label>
     </section>
 
+    <!-- ✅ Client Info Inputs -->
     <section class="client-info">
-      <input type="text" id="clientName" placeholder="Client Name" aria-label="Client Name" inputmode="text" />
-      <input type="date" id="invoiceDate" aria-label="Invoice Date" inputmode="numeric" />
+      <input type="text" id="clientName" placeholder="Client Name" aria-label="Client Name" />
+      <input type="date" id="invoiceDate" aria-label="Invoice Date" />
     </section>
 
+    <!-- ✅ Item Entry -->
     <section class="item-entry">
-      <input type="text" id="itemName" placeholder="Item Name" aria-label="Item Name" inputmode="text" />
-      <input type="number" id="itemQty" placeholder="Quantity" min="1" aria-label="Quantity" inputmode="numeric" />
-      <input type="number" id="itemPrice" placeholder="Price (USD)" min="0" step="0.01" aria-label="Price" inputmode="decimal" />
-      <button id="addItemBtn" aria-label="Add Item">Add Item</button>
+      <input type="text" id="itemName" placeholder="Item Name" aria-label="Item Name" />
+      <input type="number" id="itemQty" placeholder="Quantity" min="1" aria-label="Quantity" />
+      <input type="number" id="itemPrice" placeholder="Price (USD)" min="0" step="0.01" aria-label="Price" />
+      <button id="addItemBtn">Add Item</button>
     </section>
 
     <!-- ✅ SCROLLABLE TABLE FIX -->
@@ -59,19 +77,29 @@
       </div>
     </section>
 
+    <!-- ✅ Totals Section -->
     <section class="totals">
       <p>Subtotal: <span id="subtotal">$0.00</span></p>
       <p><strong>Total: <span id="total">$0.00</span></strong></p>
       <button id="convertZWLBtn">Convert to ZWL</button>
     </section>
 
+    <!-- ✅ Actions -->
     <section class="actions">
       <button id="printBtn">Print</button>
       <button id="pdfBtn">Export to PDF</button>
       <button id="clearBtn">Clear All</button>
     </section>
+
+    <!-- ✅ Banking Details -->
+    <section class="banking-info" style="margin-top: 2rem; font-size: 0.95rem;">
+      <h3>Banking Details</h3>
+      <p><strong>USD Account:</strong><br>Stanbic Bank – Belmont Branch<br>9140000966400</p>
+      <p><strong>ZIG Account:</strong><br>Stanbic Bank – Belmont Branch<br>9140002769599</p>
+    </section>
   </main>
 
+  <!-- ✅ Footer -->
   <footer>
     <p>&copy; 2025 Cathy’s Quotes/Invoice. Built for Kontrol Techniks Zimbabwe.</p>
   </footer>
@@ -89,7 +117,7 @@
 
   <!-- 📦 Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="script.js?v=1.0.9" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
 
