@@ -173,7 +173,7 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
 function exportPDF() {
   const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
-  const docPrefix = docType === 'Invoice' ? 'INV' : docType === 'Quotes' ? 'QT' : docType === 'Exports' ? 'EXP' : 'IMP';
+  const docPrefix = docType === 'Invoice' ? 'INV' : docType === 'Quotation' ? 'QT' : docType === 'Export' ? 'EXP' : 'IMP';
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const validUntil = getValidUntilDate(date);
   const printArea = document.getElementById('invoicePrintArea');
@@ -201,7 +201,7 @@ function exportPDF() {
 function printInvoice() {
   const clientName = document.getElementById('clientName').value || 'N/A';
   const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
-  const docPrefix = docType === 'Invoice' ? 'INV' : docType === 'Quotes' ? 'QT' : docType === 'Exports' ? 'EXP' : 'IMP';
+  const docPrefix = docType === 'Invoice' ? 'INV' : docType === 'Quotation' ? 'QT' : docType === 'Export' ? 'EXP' : 'IMP';
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const validUntil = getValidUntilDate(date);
   const printArea = document.getElementById('invoicePrintArea');
