@@ -109,7 +109,7 @@ function getValidUntilDate(startDate) {
 function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
   let html = `
   <div style="width: 100%; display: flex; justify-content: center; padding: 40px 20px; box-sizing: border-box;">
-    <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 800px; box-sizing: border-box; border-radius: 12px;">
+    <div style="font-family: 'Poppins', sans-serif; color: #2e1544; background: white; padding: 60px; width: 100%; max-width: 800px; box-sizing: border-box; border-radius: 12px; page-break-inside: avoid; break-inside: avoid;">
       <div style="background: #eae6f8; padding: 30px 35px; border-radius: 12px; margin-bottom: 40px;">
         <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
           <div style="flex: 1 1 60%;">
@@ -128,13 +128,11 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
         <p><strong>Date:</strong> ${date}</p>
         <p><strong>Issued To:</strong> ${clientName}</p>
       </div>
-
       <div style="margin-bottom: 30px; font-size: 14px;">
         <p><strong>Banking Details:</strong></p>
         <p><strong>USD ACCOUNT:</strong><br>STANBIC BANK - BELMONT BRANCH - 9140000966400</p>
         <p><strong>ZIG ACCOUNT:</strong><br>STANBIC BANK - BELMONT BRANCH - 9140002769599</p>
       </div>
-
       <table style="width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 20px;">
         <thead style="background: #f3f0fa;">
           <tr>
@@ -196,7 +194,8 @@ function exportPDF() {
       filename: `${docNumber}.pdf`,
       html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      enableLinks: false
+      enableLinks: false,
+      pagebreak: { avoid: ['tr', 'table'] }
     }).from(printArea).save().then(() => {
       printArea.innerHTML = '';
       printArea.style.visibility = 'hidden';
@@ -219,10 +218,12 @@ function printInvoice() {
   printArea.style.top = '0';
   printArea.style.left = '0';
   printArea.style.width = '100%';
+  printArea.style.minHeight = '100vh';
   printArea.style.height = 'auto';
   printArea.style.display = 'block';
   printArea.style.zIndex = '9999';
   printArea.style.background = '#fff';
+  printArea.style.pageBreakInside = 'avoid';
 
   window.onafterprint = () => {
     printArea.innerHTML = '';
