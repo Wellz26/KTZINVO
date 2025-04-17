@@ -99,7 +99,8 @@ function clearAll() {
 
 function getValidUntilDate(startDate) {
   const base = new Date(startDate);
-  base.setDate(base.getDate() + 21);
+  const daysToAdd = isConvertedToZWL ? 2 : 21;
+  base.setDate(base.getDate() + daysToAdd);
   const yyyy = base.getFullYear();
   const mm = String(base.getMonth() + 1).padStart(2, '0');
   const dd = String(base.getDate()).padStart(2, '0');
@@ -256,3 +257,4 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error('❌ Service Worker failed:', err));
   }
 });
+
