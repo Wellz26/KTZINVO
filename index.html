@@ -25,6 +25,20 @@
   </script>
 </head>
 <body>
+  <!-- 🔒 Branch Password Prompt -->
+  <div id="branchPrompt" class="branch-modal-overlay">
+    <div class="branch-modal">
+      <h2>Select Branch</h2>
+      <p>Enter your branch code:</p>
+      <input type="password" id="branchCodeInput" placeholder="Enter code" />
+      <div class="branch-modal-buttons">
+        <button onclick="validateBranchCode()">Continue</button>
+        <button onclick="resetBranchSelection(true)">Cancel</button>
+      </div>
+      <div id="branchError" class="error-msg"></div>
+    </div>
+  </div>
+
   <!-- ✅ Header -->
   <header class="app-header">
     <img src="icon.png" alt="KTZ Logo" class="logo" />
@@ -120,4 +134,5 @@
   <script src="script.js" defer></script>
 </body>
 </html>
+
 
