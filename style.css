@@ -99,6 +99,7 @@ main {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 2rem;
+  page-break-inside: avoid;
 }
 
 .invoice-table th,
@@ -174,6 +175,8 @@ footer {
   margin: auto;
   padding: clamp(24px, 5vw, 60px);
   box-sizing: border-box;
+  page-break-inside: avoid;
+  overflow: visible;
 }
 
 @media (max-width: 600px) {
@@ -212,6 +215,11 @@ footer {
     box-sizing: border-box !important;
     overflow: visible !important;
     z-index: 9999 !important;
+    page-break-inside: avoid;
+  }
+
+  .invoice-table table {
+    page-break-inside: avoid;
   }
 }
 
@@ -312,3 +320,4 @@ button:focus {
 #clearBtn:hover {
   background-color: #b02a37;
 }
+
