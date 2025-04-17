@@ -167,8 +167,8 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
       </div>
       <div style="margin-top: 40px; font-size: 14px; border-top: 1px dashed #ccc; padding-top: 20px;">
         <p><strong>Banking Details:</strong></p>
-        <p><strong>USD ACCOUNT:</strong><br>STANBIC BANK<br>BELMONT BRANCH<br>9140000966400</p>
-        <p><strong>ZIG ACCOUNT:</strong><br>STANBIC BANK<br>BELMONT BRANCH<br>9140002769599</p>
+        <p><strong>USD ACCOUNT:</strong><br>STANBIC BANK - BELMONT BRANCH - 9140000966400</p>
+        <p><strong>ZIG ACCOUNT:</strong><br>STANBIC BANK - BELMONT BRANCH - 9140002769599</p>
       </div>
     </div>
   </div>`;
