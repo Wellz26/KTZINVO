@@ -128,6 +128,13 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
         <p><strong>Date:</strong> ${date}</p>
         <p><strong>Issued To:</strong> ${clientName}</p>
       </div>
+
+      <div style="margin-bottom: 30px; font-size: 14px;">
+        <p><strong>Banking Details:</strong></p>
+        <p><strong>USD ACCOUNT:</strong><br>STANBIC BANK - BELMONT BRANCH - 9140000966400</p>
+        <p><strong>ZIG ACCOUNT:</strong><br>STANBIC BANK - BELMONT BRANCH - 9140002769599</p>
+      </div>
+
       <table style="width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 20px;">
         <thead style="background: #f3f0fa;">
           <tr>
@@ -164,11 +171,6 @@ function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
       <div style="margin-top: 60px; font-size: 14px;">
         <p>This ${docType.toLowerCase()} is valid until: <strong>${validUntil}</strong></p>
         <p>Signature: <strong>Linah M</strong></p>
-      </div>
-      <div style="margin-top: 40px; font-size: 14px; border-top: 1px dashed #ccc; padding-top: 20px;">
-        <p><strong>Banking Details:</strong></p>
-        <p><strong>USD ACCOUNT:</strong><br>STANBIC BANK - BELMONT BRANCH - 9140000966400</p>
-        <p><strong>ZIG ACCOUNT:</strong><br>STANBIC BANK - BELMONT BRANCH - 9140002769599</p>
       </div>
     </div>
   </div>`;
@@ -253,5 +255,3 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error('❌ Service Worker failed:', err));
   }
 });
-
-
