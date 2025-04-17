@@ -248,7 +248,7 @@ const branchCodes = {
 };
 
 function promptForBranch() {
-  const code = prompt("Enter branch access code (e.g., 0001):");
+  const code = prompt("Enter branch access code (e.g., ####):");
   if (!code || !branchCodes[code]) {
     alert("Invalid branch code. Reloading...");
     location.reload();
