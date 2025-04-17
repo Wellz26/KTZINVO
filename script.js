@@ -1,5 +1,5 @@
 // ==========================
-// Cathy’s Quotes/Invoice - script.js
+// KTZ Quotes/Invoice - script.js
 // ==========================
 
 let items = [];
