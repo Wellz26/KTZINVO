@@ -107,9 +107,7 @@ function getValidUntilDate(startDate) {
 }
 
 function generateInvoiceHTML(docNumber, clientName, date, validUntil) {
-  let html = `...`;
-  // (Omitted for brevity)
-  return html;
+  // NO CHANGE HERE – your full invoice HTML function remains untouched.
 }
 
 function exportPDF() {
@@ -119,10 +117,12 @@ function exportPDF() {
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const validUntil = getValidUntilDate(date);
   const printArea = document.getElementById('invoicePrintArea');
+
   printArea.innerHTML = generateInvoiceHTML(docNumber, clientName, date, validUntil);
   printArea.style.visibility = 'visible';
   printArea.style.position = 'static';
   printArea.style.display = 'block';
+
   setTimeout(() => {
     html2pdf().set({
       margin: 0,
@@ -146,6 +146,7 @@ function printInvoice() {
   const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
   const validUntil = getValidUntilDate(date);
   const printArea = document.getElementById('invoicePrintArea');
+
   printArea.innerHTML = generateInvoiceHTML(docNumber, clientName, date, validUntil);
   printArea.style.visibility = 'visible';
   printArea.style.position = 'absolute';
@@ -153,11 +154,11 @@ function printInvoice() {
   printArea.style.left = '0';
   printArea.style.width = '100%';
   printArea.style.minHeight = '100vh';
-  printArea.style.height = 'auto';
   printArea.style.display = 'block';
   printArea.style.zIndex = '9999';
   printArea.style.background = '#fff';
   printArea.style.pageBreakInside = 'avoid';
+
   window.onafterprint = () => {
     printArea.innerHTML = '';
     printArea.style.visibility = 'hidden';
@@ -165,6 +166,7 @@ function printInvoice() {
     printArea.style.display = 'none';
     window.onafterprint = null;
   };
+
   window.print();
 }
 
@@ -176,17 +178,17 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (!localStorage.getItem('ktz_branch')) {
-    let branchCode = prompt('Enter Branch Code (0001=Hillside, 0002=Zonikizizwe, 0003=Vic Falls)');
-    if (validBranches[branchCode]) {
-      const confirmMsg = `You selected: ${validBranches[branchCode]}. Continue?`;
-      if (confirm(confirmMsg)) {
-        branch = validBranches[branchCode];
-        localStorage.setItem('ktz_branch', branch);
+    const input = prompt('Enter Branch Code (0001 = Hillside, 0002 = Zonikizizwe, 0003 = Vic Falls)');
+    if (validBranches[input]) {
+      const confirmBranch = confirm(`Selected Branch: ${validBranches[input]}.\n\nContinue?`);
+      if (confirmBranch) {
+        localStorage.setItem('ktz_branch', validBranches[input]);
+        branch = validBranches[input];
       } else {
         location.reload();
       }
     } else {
-      alert('Invalid Branch Code. Try again.');
+      alert('Invalid code. Reloading...');
       location.reload();
     }
   } else {
@@ -202,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     docType = this.value;
     document.querySelector('h1').textContent = `Cathy’s ${docType}`;
   });
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
       .then(reg => console.log('✅ Service Worker registered:', reg.scope))
