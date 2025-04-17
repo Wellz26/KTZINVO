@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <!-- ============================
-       KTZs Quotes/Invoice - index.html
+       KTZ Quotes/Invoice - index.html
        ============================ -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <title>KTZ Quotes/Invoice</title>
 
-  <!-- ✅ Register Service Worker for Offline Support -->
+  <!-- ✅ Register Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -25,15 +25,15 @@
   </script>
 </head>
 <body>
-  <!-- 🔒 Branch Password Prompt -->
-  <div id="branchPrompt" class="branch-modal-overlay">
+  <!-- 🔐 Branch Code Modal -->
+  <div id="branchPrompt" class="branch-modal-overlay" style="display: none;">
     <div class="branch-modal">
       <h2>Select Branch</h2>
       <p>Enter your branch code:</p>
       <input type="password" id="branchCodeInput" placeholder="Enter code" />
       <div class="branch-modal-buttons">
         <button onclick="validateBranchCode()">Continue</button>
-        <button onclick="resetBranchSelection(true)">Cancel</button>
+        <button onclick="resetBranch()">Cancel</button>
       </div>
       <div id="branchError" class="error-msg"></div>
     </div>
@@ -46,10 +46,10 @@
   </header>
 
   <main>
-    <!-- ✅ Document Type Dropdown -->
+    <!-- ✅ Document Type -->
     <section class="doc-toggle">
-      <label class="toggle-label" for="docTypeSelect">
-        <span class="doc-label">Document Type:</span>
+      <label for="docTypeSelect">
+        Document Type:
         <select id="docTypeSelect" aria-label="Document Type">
           <option value="Invoice">Invoice</option>
           <option value="Quotation">Quotation</option>
@@ -59,24 +59,24 @@
       </label>
     </section>
 
-    <!-- ✅ Client Info Inputs -->
+    <!-- ✅ Client Info -->
     <section class="client-info">
-      <input type="text" id="clientName" placeholder="Client Name" aria-label="Client Name" />
-      <input type="date" id="invoiceDate" aria-label="Invoice Date" />
+      <input type="text" id="clientName" placeholder="Client Name" />
+      <input type="date" id="invoiceDate" />
     </section>
 
-    <!-- ✅ Item Entry -->
+    <!-- ✅ Add Item -->
     <section class="item-entry">
-      <input type="text" id="itemName" placeholder="Item Name" aria-label="Item Name" />
-      <input type="number" id="itemQty" placeholder="Quantity" min="1" aria-label="Quantity" />
-      <input type="number" id="itemPrice" placeholder="Price (USD)" min="0" step="0.01" aria-label="Price" />
+      <input type="text" id="itemName" placeholder="Item Name" />
+      <input type="number" id="itemQty" placeholder="Qty" min="1" />
+      <input type="number" id="itemPrice" placeholder="Price (USD)" min="0" step="0.01" />
       <button id="addItemBtn">Add Item</button>
     </section>
 
-    <!-- ✅ SCROLLABLE TABLE FIX -->
+    <!-- ✅ Invoice Table -->
     <section class="invoice-table">
       <div style="overflow-x: auto;">
-        <table aria-label="Invoice Item Table">
+        <table>
           <thead>
             <tr>
               <th>Item</th>
@@ -91,7 +91,7 @@
       </div>
     </section>
 
-    <!-- ✅ Totals Section -->
+    <!-- ✅ Totals -->
     <section class="totals">
       <p>Subtotal: <span id="subtotal">$0.00</span></p>
       <p><strong>Total: <span id="total">$0.00</span></strong></p>
@@ -105,8 +105,8 @@
       <button id="clearBtn">Clear All</button>
     </section>
 
-    <!-- ✅ Banking Details -->
-    <section class="banking-info" style="margin-top: 2rem; font-size: 0.95rem;">
+    <!-- ✅ Bank Info -->
+    <section class="banking-info">
       <h3>Banking Details</h3>
       <p><strong>USD Account:</strong><br>Stanbic Bank – Belmont Branch<br>9140000966400</p>
       <p><strong>ZIG Account:</strong><br>Stanbic Bank – Belmont Branch<br>9140002769599</p>
@@ -118,21 +118,20 @@
     <p>&copy; 2025 KTZ Quotes/Invoice. Built for Kontrol Techniks Zimbabwe.</p>
   </footer>
 
-  <!-- 🖨️ Hidden printable template -->
+  <!-- 🖨️ Hidden Printable Area -->
   <div id="invoicePrintArea" style="visibility: hidden; position: absolute; left: -9999px; top: 0;"></div>
 
-  <!-- 📲 PWA Install Banner -->
-  <div id="installBanner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #eae6f8; border: 1px solid #ccc; padding: 16px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+  <!-- 📲 PWA Install Prompt -->
+  <div id="installBanner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #eae6f8; border: 1px solid #ccc; padding: 16px; border-radius: 8px; z-index: 9999;">
     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <span style="font-family: 'Poppins', sans-serif; color: #4b2c76;">Install this app for a better experience.</span>
-      <button id="installBtn" style="background: #7d52c1; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Install</button>
+      <span>Install this app for a better experience.</span>
+      <button id="installBtn" style="background: #7d52c1; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px;">Install</button>
     </div>
   </div>
 
-  <!-- 📦 Libraries -->
+  <!-- 📦 Dependencies -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="script.js" defer></script>
 </body>
 </html>
-
 
