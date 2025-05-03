@@ -359,58 +359,25 @@ function printInvoice() {
 }
 
 function emailInvoice() {
-  const clientEmail = document.getElementById('clientEmail').value;
+  const clientEmail = document.getElementById('clientEmail').value.trim();
+  const clientName = document.getElementById('clientName').value.trim();
+  const docType = document.getElementById('docTypeSelect').value;
+
   if (!clientEmail) {
-    alert('Please enter a client email address to send the invoice.');
+    alert('Please enter a client email.');
     return;
   }
 
-  const clientName = document.getElementById('clientName').value || 'N/A';
-  const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
-  const docPrefix = docType === 'Invoice' ? 'INV' : docType === 'Quotation' ? 'QT' : docType === 'Export' ? 'EXP' : 'IMP';
-  const docNumber = `${docPrefix}-${date.replace(/-/g, '')}-${Math.floor(Math.random() * 900 + 100)}`;
-  const validUntil = getValidUntilDate(date);
-  const printArea = document.getElementById('invoicePrintArea');
+  const subject = `${docType} from KTZ`;
+  const body = `Hello ${clientName || "Client"},%0D%0A%0D%0AHere is your ${docType} from Kontrol Tekniks Zimbabwe.%0D%0A%0D%0AThank you.%0D%0A– KTZ`;
 
-  printArea.innerHTML = generateInvoiceHTML(docNumber, clientName, date, validUntil);
-  printArea.style.visibility = 'visible';
-  printArea.style.position = 'static';
-  printArea.style.display = 'block';
-
-  setTimeout(() => {
-    html2pdf().set({
-      margin: 0,
-      filename: `${docNumber}.pdf`,
-      html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      enableLinks: false,
-      pagebreak: { avoid: ['tr', 'table'] }
-    }).from(printArea).get('pdf').then(pdf => {
-      const pdfBlob = pdf.output('blob');
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      
-      // Create email link with PDF attachment
-      const subject = encodeURIComponent(`${docType} ${docNumber} - ${clientName}`);
-      const body = encodeURIComponent(
-        `Dear ${clientName},\n\n` +
-        `Please find attached your ${docType.toLowerCase()} #${docNumber}.\n\n` +
-        `This document is valid until: ${validUntil}\n\n` +
-        `Best regards,\n` +
-        `Kontrol Techniks Zimbabwe`
-      );
-      
-      const mailtoLink = `mailto:${clientEmail}?subject=${subject}&body=${body}&attachment=${pdfUrl}`;
-      window.location.href = mailtoLink;
-      
-      // Cleanup
-      setTimeout(() => {
-        printArea.innerHTML = '';
-        printArea.style.visibility = 'hidden';
-        printArea.style.position = 'absolute';
-        URL.revokeObjectURL(pdfUrl);
-      }, 1000);
-    });
-  }, 200);
+  // Fix: open mail in new hidden anchor without affecting screen layout
+  const mailLink = document.createElement('a');
+  mailLink.href = `mailto:${clientEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+  mailLink.style.display = 'none';
+  document.body.appendChild(mailLink);
+  mailLink.click();
+  document.body.removeChild(mailLink);
 }
 
 // ==========================
@@ -858,6 +825,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('editItemCancel').onclick = closeEditModal;
   document.getElementById('editItemSave').onclick = saveEditItem;
 });
+
+
 
 
 
