@@ -1,10 +1,10 @@
 {
   "name": "KTZ Quotes/Invoice",
-  "short_name": "KTZ-IQ",        
+  "short_name": "KTZ-IQ",
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#EAE6F8",
   "background_color": "#FDFCF8",
+  "theme_color": "#EAE6F8",
   "orientation": "portrait",
   "icons": [
     {
