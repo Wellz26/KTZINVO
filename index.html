@@ -43,6 +43,7 @@
   <header class="app-header">
     <img src="icon.png" alt="KTZ Logo" class="logo" />
     <h1>KTZ Quotes/Invoice</h1>
+    <div id="branchDisplay" class="branch-display"></div>
   </header>
 
   <main>
@@ -62,14 +63,24 @@
     <!-- ✅ Client Info -->
     <section class="client-info">
       <input type="text" id="clientName" placeholder="Client Name" />
+      <input type="email" id="clientEmail" placeholder="Client Email (optional)" />
       <input type="date" id="invoiceDate" />
     </section>
 
     <!-- ✅ Add Item -->
     <section class="item-entry">
       <input type="text" id="itemName" placeholder="Item Name" />
-      <input type="number" id="itemQty" placeholder="Qty" min="1" />
+      <input type="number" id="itemQty" placeholder="Qty" min="0.01" step="0.01" />
       <input type="number" id="itemPrice" placeholder="Price (USD)" min="0" step="0.01" />
+      <select id="itemUnit" aria-label="Unit">
+        <option value="pcs">pcs</option>
+        <option value="kg">kg</option>
+        <option value="box">box</option>
+        <option value="set">set</option>
+        <option value="pair">pair</option>
+        <option value="m">m</option>
+        <option value="l">l</option>
+      </select>
       <button id="addItemBtn">Add Item</button>
     </section>
 
@@ -102,6 +113,7 @@
     <section class="actions">
       <button id="printBtn">Print</button>
       <button id="pdfBtn">Export to PDF</button>
+      <button id="emailBtn">Email Invoice</button>
       <button id="clearBtn">Clear All</button>
     </section>
 
@@ -132,6 +144,38 @@
   <!-- 📦 Dependencies -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="script.js" defer></script>
+
+  <!-- Edit Item Modal -->
+  <div id="editItemModal" class="edit-item-modal" style="display:none;">
+    <div class="edit-item-modal-content">
+      <h2>Edit Item</h2>
+      <label>Item Name
+        <input type="text" id="editItemName" />
+      </label>
+      <label>Quantity
+        <input type="number" id="editItemQty" min="0.01" step="0.01" />
+      </label>
+      <label>Price
+        <input type="number" id="editItemPrice" min="0" step="0.01" />
+      </label>
+      <label>Unit
+        <select id="editItemUnit">
+          <option value="pcs">pcs</option>
+          <option value="kg">kg</option>
+          <option value="box">box</option>
+          <option value="set">set</option>
+          <option value="pair">pair</option>
+          <option value="m">m</option>
+          <option value="l">l</option>
+        </select>
+      </label>
+      <div class="edit-item-modal-actions">
+        <button id="editItemSave" class="action-btn">Save</button>
+        <button id="editItemCancel" class="action-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
+
 
