@@ -1,15 +1,13 @@
 {
-  "version": "3.0.0",
-  "last_updated": "2024-03-15",
-  "build": "20240315.1",
+  "version": "3.1.0",
+  "last_updated": "2024-05-03",
+  "build": "20240503.1",
   "changelog": [
-    "Added dynamic content caching",
-    "Implemented background sync",
-    "Added version update checks",
-    "Enhanced offline capabilities",
-    "Improved mobile responsiveness",
-    "Added unit selection for items",
-    "Enhanced PDF generation"
+    "Improved iOS and mobile PWA compatibility (meta tags, safe area, font size)",
+    "Enhanced responsive stacking for .actions, .client-info, .item-entry",
+    "Added iOS home screen support and touch icon",
+    "Fixed input zoom on iPhone",
+    "General UI/UX improvements for mobile"
   ],
   "compatibility": {
     "browsers": {
