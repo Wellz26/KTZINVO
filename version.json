@@ -1,0 +1,22 @@
+{
+  "version": "3.0.0",
+  "last_updated": "2024-03-15",
+  "build": "20240315.1",
+  "changelog": [
+    "Added dynamic content caching",
+    "Implemented background sync",
+    "Added version update checks",
+    "Enhanced offline capabilities",
+    "Improved mobile responsiveness",
+    "Added unit selection for items",
+    "Enhanced PDF generation"
+  ],
+  "compatibility": {
+    "browsers": {
+      "chrome": ">=88",
+      "firefox": ">=78",
+      "safari": ">=14",
+      "edge": ">=88"
+    }
+  }
+} 
