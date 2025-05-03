@@ -167,7 +167,9 @@ header h1 {
 main {
   max-width: 960px;
   margin: auto;
-  padding: 2rem;
+  padding: clamp(1rem, 4vw, 2rem);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .client-info,
@@ -179,9 +181,10 @@ main {
 }
 
 .client-info input,
-.item-entry input {
-  flex: 1;
-  min-width: 180px;
+.item-entry input,
+.item-entry select {
+  min-width: 0;
+  flex: 1 1 100%;
   padding: 0.75rem;
   border: 1px solid var(--muted);
   border-radius: var(--border-radius);
